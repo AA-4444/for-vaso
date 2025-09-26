@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Contact — Wengy</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+	/* ===== Design tokens ===== */
+	:root{
+	  --bg:#ffffff;
+	  --ink:#0b0b0b;         /* основной чёрный */
+	  --muted:#6b6b6b;       /* серый для вторичного */
+	  --brand:#1E48C1;       /* синий CTA */
+	  --line:#e6e6e6;
+	  --max:1120px;
+	  --header-h:74px;
+	}
+	@media (max-width:768px){
+	  :root{ --header-h:64px }
+	}
+
+	/* ===== Base ===== */
+	*{box-sizing:border-box}
+	html,body{
+	  margin:0; padding:0;
+	  background:var(--bg);
+	  color:var(--ink) !important;   /* чёрный принудительно */
+	  font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+	  text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+	}
+	a{color:inherit;text-decoration:none}
+	img{max-width:100%;height:auto;display:block}
+	.container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+	/* ===== Page spacing under absolute site-header ===== */
+	.page{
+	  padding-top: calc(var(--header-h) + 56px);
+	  padding-bottom: 96px;
+	}
+	@media (max-width:1024px){
+	  .page{ padding-top: calc(var(--header-h) + 36px); padding-bottom: 72px; }
+	}
+
+	/* ===== Layout ===== */
+	.grid{
+	  display:grid;
+	  grid-template-columns: 1.4fr 0.9fr; /* левая колонка шире */
+	  gap:56px;
+	  align-items:start;
+	}
+	@media (max-width:980px){
+	  .grid{ grid-template-columns:1fr; gap:36px; }
+	}
+
+	/* ===== Big intro ===== */
+	.intro h1{
+	  color:#0b0b0b !important;
+	  font-weight:800;
+	  font-size: clamp(32px, 5vw, 56px);
+	  line-height:1.08;
+	  letter-spacing:-0.02em;
+	  margin:0 0 18px;
+	  text-wrap:balance;
+	}
+	.intro p.lead{
+	  margin:0 0 22px;
+	  color:#6b6b6b !important;         /* вторичный — серый */
+	  font-size: clamp(16px, 2.2vw, 18px);
+	}
+	.rule{
+	  height:1px;background:#d8d8d8;margin:28px 0 24px;border:0;
+	}
+
+	/* ===== Form ===== */
+	.form{ display:grid; gap:18px; color:#0b0b0b !important; }
+	.row{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+	@media (max-width:640px){ .row{ grid-template-columns:1fr } }
+
+	label{
+	  display:block; font-weight:600; font-size:14px; margin:4px 0 8px; color:#0b0b0b !important;
+	}
+	.hint{ color:#6b6b6b !important; font-weight:500; font-size:12px; margin-left:6px }
+	input[type="text"],
+	input[type="email"],
+	input[type="url"],
+	textarea{
+	  width:100%;
+	  border:1px solid var(--line);
+	  background:#fff;
+	  border-radius:10px;
+	  padding:14px 14px;
+	  font:inherit;
+	  color:#0b0b0b !important;
+	  outline:none;
+	  transition:border-color .2s, box-shadow .2s;
+	}
+	textarea{ min-height:140px; resize:vertical }
+	input::placeholder, textarea::placeholder{ color:#9b9b9b }
+
+	input:focus, textarea:focus{
+	  border-color: var(--brand);
+	  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 20%, transparent);
+	}
+
+	/* Newsletter checkbox */
+	.check{
+	  display:flex; align-items:flex-start; gap:10px; margin-top:6px;
+	  color:#6b6b6b !important; font-size:14px;
+	}
+
+	/* Submit */
+	.actions{ margin-top:8px }
+	.btn{
+	  display:inline-flex; align-items:center; justify-content:center;
+	  padding:14px 22px; border-radius:999px; border:0; cursor:pointer;
+	  background:var(--brand); color:#fff; font-weight:700; font-size:16px;
+	  box-shadow:0 6px 20px rgba(30,72,193,.25); transition:transform .06s ease, box-shadow .2s ease;
+	}
+	.btn:active{ transform:translateY(1px); box-shadow:0 4px 12px rgba(30,72,193,.22) }
+
+	/* ===== Side card (NOT sticky anymore) ===== */
+	.side{ position: static; top:auto; }  /* <— было sticky */
+	.card{
+	  border:1px solid var(--line);
+	  border-radius:16px;
+	  overflow:hidden;
+	  background:#fafafa;
+	  color:#0b0b0b !important;
+	}
+	.card-media{
+	  aspect-ratio: 4 / 3;
+	  background:
+		radial-gradient(120% 120% at 70% 20%, #9fd0ff 0%, #2a6bf0 45%, #0b1d48 100%);
+	  display:grid; place-items:center;
+	}
+	.card-media img{ width:78%; height:auto; filter: drop-shadow(0 10px 30px rgba(0,0,0,.3)); }
+	.card-body{ padding:18px 18px 20px }
+	.card-title{
+	  font-weight:800; font-size:22px; margin:0 0 8px; line-height:1.2; color:#0b0b0b !important;
+	}
+	.card-text{ color:#0b0b0b !important; opacity:.85; font-size:14px; line-height:1.45; margin:0 0 8px }
+	.card-link{ color:var(--brand); font-weight:700; font-size:14px }
+
+	/* ===== Small accessibility tweak ===== */
+	.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+	.card-media{
+	  aspect-ratio: 4 / 3;
+	  background:#f5f5f5;
+	  overflow:hidden;
+	  display:flex;
+	  align-items:center;
+	  justify-content:center;
+	}
+	
+	.card-media img{
+	  width:100%;
+	  height:100%;
+	  object-fit:cover;   /* заполняет контейнер, обрезая лишнее */
+	  object-position:center;
+	  display:block;
+	}
+  </style>
+
+  <!-- Подключаем общий хедер/футер -->
+  <script type="module" src="/components/header-component.js"></script>
+</head>
+<body>
+
+  <!-- Общий хедер -->
+  <site-header></site-header>
+
+ <script>
+   window.addEventListener('DOMContentLoaded', () => {
+	 const host = document.querySelector('site-header');
+	 if (!host || !host.shadowRoot) return;
+ 
+	 const s = document.createElement('style');
+	 s.textContent = `
+	   /* === Desktop и mobile header (бар) === */
+	   .brand-link{ color:#0b0b0b !important; }
+	   .burger span{ background:#0b0b0b !important; }
+	   .cta{ background: var(--brand, #1E48C1) !important; color:#fff !important; }
+ 
+	   /* === Desktop ссылки === */
+	   @media (min-width: 769px){
+		 .menu > a,
+		 .menu .menu-link,
+		 .menu .menu-link.has-sub{ color:#0b0b0b !important; }
+		 .menu > a:hover,
+		 .menu .menu-link:hover,
+		 .menu .menu-link:focus{ color:#0b0b0b !important; text-decoration:underline; }
+	   }
+ 
+	   /* === Mobile overlay меню === */
+	   @media (max-width: 768px){
+		 .menu.open > a,
+		 .menu.open .menu-link,
+		 .menu.open .menu-link.has-sub{ color:#ffffff !important; }
+		 .menu.open > a:hover,
+		 .menu.open .menu-link:hover,
+		 .menu.open .menu-link:focus{ color:#ffffff !important; text-decoration:underline; }
+	   }
+	 `;
+	 host.shadowRoot.appendChild(s);
+   });
+ </script>
+
+  <main class="page">
+	<div class="container grid">
+	  <!-- LEFT: heading + form -->
+	  <section class="intro">
+		<h1>
+		  Want to discuss a<br/>
+		  marketing<br/>
+		  engagement?
+		</h1>
+		<p class="lead">
+		  Let us know about your company and the project you have in mind, and we’ll be in touch shortly!
+		</p>
+
+		<hr class="rule" aria-hidden="true"/>
+
+		<form class="form" action="#" method="post" novalidate>
+		  <!-- Name -->
+		  <div>
+			<label for="first">Name <span class="hint">(required)</span></label>
+			<div class="row">
+			  <div>
+				<span class="sr-only">First name</span>
+				<input id="first" name="first" type="text" placeholder="First Name" required>
+			  </div>
+			  <div>
+				<span class="sr-only">Last name</span>
+				<input id="last" name="last" type="text" placeholder="Last Name" required>
+			  </div>
+			</div>
+		  </div>
+
+		  <!-- Email -->
+		  <div>
+			<label for="email">Email <span class="hint">(required)</span></label>
+			<input id="email" name="email" type="email" placeholder="you@company.com" required>
+		  </div>
+
+		  <!-- Company -->
+		  <div>
+			<label for="company">Company <span class="hint">(required)</span></label>
+			<input id="company" name="company" type="text" placeholder="Company name" required>
+		  </div>
+
+		  <!-- Website -->
+		  <div>
+			<label for="site">Website <span class="hint">(required)</span></label>
+			<input id="site" name="site" type="url" placeholder="http://">
+		  </div>
+
+		  <!-- Message -->
+		  <div>
+			<label for="msg">Message <span class="hint">(required)</span></label>
+			<textarea id="msg" name="message" placeholder="Brief, scope, timeline, and budget are helpful details." required></textarea>
+		  </div>
+
+		  <!-- Newsletter -->
+		  <label class="check">
+			<input type="checkbox" name="optin" />
+			<span>Yes, please subscribe me to occasional updates and insights from the Wengy team.</span>
+		  </label>
+
+		  <div class="actions">
+			<button class="btn" type="submit">SUBMIT</button>
+		  </div>
+		</form>
+	  </section>
+
+	  <!-- RIGHT: card (not sticky) -->
+	  <aside class="side">
+		<div class="card">
+		  <div class="card-media">
+			<img src="assests/IMG_4603.PNG" alt="Illustration" loading="lazy">
+		  </div>
+		  <div class="card-body">
+			<h3 class="card-title">Want to apply to Wengy?</h3>
+			<p class="card-text">
+			  View our Careers page and apply for open roles through each job description.
+			</p>
+			<a class="card-link" href="#">See open roles →</a>
+		  </div>
+		</div>
+	  </aside>
+	</div>
+  </main>
+
+  <!-- Общий футер -->
+  <site-footer></site-footer>
+  <script type="module" src="/components/footer-component.js"></script>
+</body>
+</html>

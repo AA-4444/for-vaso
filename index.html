@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <!-- единый мета-тег; с cover для вырезов -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>OLIVINE — Home 1:1 Replica</title>
+
+  <!-- Montserrat (можешь заменить локально) -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+    /* =========================
+       1) Fonts
+    ========================== */
+    @font-face{
+      font-family:"Extenda 30 Deca";
+      src:url("fonts/Extenda-30Deca.woff2") format("woff2"),
+          url("fonts/Extenda-30Deca.woff") format("woff");
+      font-weight:700;
+      font-style:normal;
+      font-display:swap;
+    }
+    @font-face{
+      font-family:"Zing Rust Base";
+      src:url("fonts/ZingRust-Base.woff2") format("woff2"),
+          url("fonts/ZingRust-Base.woff") format("woff");
+      font-weight:700;
+      font-style:normal;
+      font-display:swap;
+    }
+    @font-face{
+      font-family:"Montserrat";
+      src:url("fonts/Montserrat-Regular.woff2") format("woff2"),
+          url("fonts/Montserrat-Regular.woff") format("woff");
+      font-weight:400;
+      font-style:normal;
+      font-display:swap;
+    }
+  
+    /* =========================
+       2) CSS Vars (design tokens)
+    ========================== */
+    :root{
+      /* colors & layout */
+      --bg-dark:#0a0a0a;
+      --ink:#fff;
+      --muted:#b9b9b9;
+      --brand:#1E48C1;
+      --line:#1f1f1f;
+      --beige:#f1ede6;
+      --max:1200px;
+  
+      /* header / safe area */
+      --header-h:74px;                      /* desktop header height */
+      --safe-top:env(safe-area-inset-top, 0px);
+  
+      /* hero paddings (desktop defaults) */
+      --hero-pt:calc(180px + var(--header-h));
+      --hero-pb:80px;
+  
+      /* overscan to kill 1px gaps on some GPUs
+         desktop: small reserve, mobile: 0 (no zoom feel) */
+      --overscan:2px;
+      
+      /* motion tokens */
+      --ease: cubic-bezier(.22,.61,.36,1);  /* natural, как во framer */
+      --dur: .6s;
+      --dur-fast: .35s;
+      --shadow-card: 0 1px 3px rgba(0,0,0,.1);
+      --shadow-hover: 0 18px 40px rgba(0,0,0,.20);
+      --outline: color-mix(in srgb, var(--brand) 22%, #ffffff);
+    }
+  
+    /* Mobile tokens override (no rule duplication) */
+    @media (max-width:768px){
+      :root{
+        --header-h:64px;
+        --hero-pt:calc(140px + var(--header-h));
+        --hero-pb:56px;
+        --overscan:0px; /* главное для убирания «зум-эффекта» */
+      }
+    }
+  
+    /* =========================
+       3) Base
+    ========================== */
+    *{ box-sizing:border-box }
+  
+    html,body{
+      margin:0;
+      padding:0;
+      background:var(--bg-dark);
+      color:var(--ink);
+      font-family:"Montserrat",-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      text-rendering:optimizeLegibility;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+  
+    a{ color:inherit; text-decoration:none }
+  
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 24px;
+    }
+  
+    /* =========================
+       4) HERO
+    ========================== */
+    .hero{
+      position:relative;
+      text-align:center;
+      background:#000;
+      overflow:hidden;
+      min-height:85vh;                 /* сохранено твоё значение */
+      padding-top:var(--hero-pt);      /* задаём только здесь */
+      padding-bottom:var(--hero-pb);
+    }
+  
+    /* video fully covers hero incl. top padding & safe area.
+       никаких scale, только аккуратный overscan */
+    .hero-video{
+      position:absolute;
+      left:0;
+      right:0;
+      width:100%;
+      top:calc(-1 * var(--hero-pt) - var(--safe-top) - var(--overscan));
+      height:calc(100% + var(--hero-pt) + var(--safe-top) + (2 * var(--overscan)));
+      object-fit:cover;
+      object-position:center top; /* на телефоне кадр аккуратнее */
+      z-index:0;
+      pointer-events:none;
+      opacity:.95;
+      transform:none;
+      backface-visibility:hidden;
+      will-change:transform;
+    }
+  
+    .hero-content{ position:relative; z-index:2; }
+  
+    .hero h1{
+      font-family:"Extenda 30 Deca","Montserrat",sans-serif;
+      letter-spacing:.2px;
+      font-size:64px;
+      line-height:1.05;
+      margin:0 0 18px;
+      /* аккуратные переносы */
+      hyphens:auto;
+      word-break:normal;
+      overflow-wrap:anywhere;          /* если очень длинные слова */
+      widows:2; orphans:2;             /* чтобы не оставалось 1 слово строкой */
+      text-wrap:balance;
+    }
+  
+    .hero p{
+      color:#d1d5db;
+      font-size:22px;
+      margin:0 auto 26px;
+      max-width:760px;
+      hyphens:auto;
+      word-break:normal;
+      overflow-wrap:anywhere;
+      widows:2; orphans:2;
+      text-wrap:balance;
+    }
+  
+    .hero .cta{
+      background:var(--brand);
+      color:#fff;
+      border:0;
+      border-radius:999px;
+      padding:16px 32px;
+      font-size:18px;
+      font-weight:600;
+      display:inline-block;
+      box-shadow:0 0 0 0 rgba(30,72,193,.35);
+      transition:box-shadow .3s var(--ease), transform .06s ease;
+      margin-top:12px;
+    }
+    .hero .cta:hover{
+      box-shadow:0 10px 30px 0 rgba(30,72,193,.35);
+    }
+    .hero .cta:active{
+      transform: translateY(1px);
+    }
+  
+    /* Mobile typography/height ONLY (видео не трогаем) */
+    @media (max-width:768px){
+      .hero{ min-height:75vh; }        /* как в твоей версии */
+      .hero-content{ text-align:center; }
+      .hero h1{ font-size:36px; line-height:1.2; }
+      .hero p{ font-size:18px; margin-bottom:24px; max-width:28ch; }
+      .hero .cta{ font-size:15px; padding:12px 18px; }
+    }
+  
+    /* =========================
+       5) Logos Marquee
+    ========================== */
+    .hero-carousel{ background:#000; padding:22px 0 }
+    .marquee{ overflow:hidden }
+    .track{ display:flex; gap:50px; animation:scroll 35s linear infinite }
+    .track img{ height:40px; object-fit:contain; filter:invert(1) }
+    @keyframes scroll{
+      from{ transform:translateX(0) }
+      to{ transform:translateX(-50%) }
+    }
+  
+    /* =========================
+       6) Beige Sections
+    ========================== */
+    .section-beige{
+      background:var(--beige);
+      color:#000;
+      padding:100px 0;
+    }
+    .section-beige h2{
+      text-align:center;
+      font-size:32px;
+      margin:0 0 60px;
+      font-family:"Zing Rust Base","Montserrat",sans-serif;
+      text-wrap:balance;
+    }
+    .three-cols{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:40px;
+      max-width:var(--max);
+      margin:0 auto;
+    }
+    .card{
+      background:#fff;
+      padding:40px 30px;
+      box-shadow:var(--shadow-card);
+      border:1px solid #ececec;
+      border-radius:16px;
+      transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+      will-change: transform, box-shadow;
+    }
+    .card:hover{
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--outline);
+      background: #fff; /* сохраним светлый фон */
+    }
+    .card h3{
+      margin:0 0 14px;
+      font-size:20px;
+      font-family:"Extenda 30 Deca","Montserrat",sans-serif;
+    }
+    .card p{
+      margin:0 0 22px;
+      font-size:16px;
+      line-height:1.45;
+      color:#222;
+    }
+    .card a{
+      display:inline-block;
+      background:#000;
+      color:#fff;
+      padding:12px 26px;
+      border-radius:999px;
+      font-weight:600;
+      font-size:14px;
+      transition: transform .06s ease, box-shadow .2s var(--ease);
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    .card a:hover{
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    }
+    .card a:active{ transform: translateY(1px); }
+  
+    /* =========================
+       7) Tiles
+    ========================== */
+    .tiles{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:22px;
+      max-width:var(--max);
+      margin:0 auto;
+    }
+    .tile{
+      background:#fff;
+      padding:20px;
+      font-weight:600;
+      font-size:18px;
+      color:#000;
+      text-align:center;
+      border:1px solid #ececec;
+      border-radius:12px;
+      transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur-fast) var(--ease);
+      will-change: transform, box-shadow;
+    }
+    .tile:hover{
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--outline);
+    }
+  
+    /* =========================
+       8) Industries
+    ========================== */
+    .industries{
+      background:var(--beige);
+      color:#000;
+      padding:100px 0;
+    }
+    .industries .container{
+      display:grid;
+      grid-template-columns:1fr 2fr;
+      gap:40px;
+      align-items:start;
+    }
+    .industries h2{
+      font-size:32px;
+      margin:0;
+      font-family:"Zing Rust Base","Montserrat",sans-serif;
+      text-wrap:balance;
+    }
+    .accordion{ border-top:1px solid #ccc }
+    .accordion-item{
+      border-bottom:1px solid #ccc;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 0;
+      font-size:18px;
+      font-weight:500;
+      transition: color .2s var(--ease);
+    }
+    .accordion-item:hover{
+      color:#111;
+    }
+    .accordion-item span{
+      font-size:24px;
+      font-weight:400;
+      color:#555;
+      transition: transform .25s var(--ease);
+    }
+    .accordion-item:hover span{
+      transform: translateY(-2px);
+    }
+  
+    /* =========================
+       9) Reveal Animations (like framer-motion)
+    ========================== */
+    .reveal{
+      opacity:0;
+      transform: translateY(18px);
+      transition:
+        opacity var(--dur) var(--ease),
+        transform var(--dur) var(--ease);
+      will-change: opacity, transform;
+    }
+    .reveal.in{
+      opacity:1;
+      transform: none;
+    }
+    /* вариации направления при желании */
+    .reveal-up{ transform: translateY(18px) }
+    .reveal-down{ transform: translateY(-18px) }
+    .reveal-left{ transform: translateX(18px) }
+    .reveal-right{ transform: translateX(-18px) }
+    .reveal-up.in,
+    .reveal-down.in,
+    .reveal-left.in,
+    .reveal-right.in{ transform:none }
+
+    /* задержки как классы */
+    .delay-1{ transition-delay: .08s }
+    .delay-2{ transition-delay: .16s }
+    .delay-3{ transition-delay: .24s }
+    .delay-4{ transition-delay: .32s }
+
+    /* hero “стартовая” анимация — мягкая */
+    @keyframes softFadeUp{
+      from{ opacity:0; transform: translateY(14px) }
+      to{ opacity:1; transform: none }
+    }
+    .hero .reveal-onload{
+      opacity:0;
+      animation: softFadeUp var(--dur) var(--ease) forwards;
+    }
+    .hero .reveal-onload.h1{ animation-delay: .05s }
+    .hero .reveal-onload.p { animation-delay: .16s }
+    .hero .reveal-onload.btn{ animation-delay: .27s }
+
+    /* reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      .reveal,
+      .hero .reveal-onload{
+        opacity:1 !important;
+        transform:none !important;
+        animation:none !important;
+        transition:none !important;
+      }
+      .card, .tile{
+        transition: none !important;
+      }
+    }
+  
+    /* =========================
+       10) Responsive layout tweaks
+    ========================== */
+    @media (max-width:1024px){
+      .three-cols{ grid-template-columns:repeat(2,1fr); gap:24px }
+      .industries .container{ grid-template-columns:1fr }
+    }
+    @media (max-width:768px){
+      .three-cols{ grid-template-columns:1fr; gap:20px }
+      .tiles{ grid-template-columns:1fr 1fr; gap:16px }
+      .card{ padding:24px 20px }
+    }
+    @media (max-width:480px){
+      .hero h1{ font-size:32px }
+      .hero p{ font-size:16px }
+      .hero .cta{ width:100%; max-width:280px; margin:0 auto }
+      .tiles{ grid-template-columns:1fr }
+      .past-experience h2{ font-size:22px !important; margin-bottom:30px }
+      .past-experience div[style*="display:flex"]{ gap:20px !important }
+      .industries{ padding:60px 16px }
+      .accordion-item{ font-size:16px; padding:14px 0 }
+    }
+    /* hero “стартовая” анимация — мягкая и последовательная */
+    @keyframes softFadeUp{
+      from{ opacity:0; transform: translateY(20px) }
+      to{ opacity:1; transform: none }
+    }
+    
+    .hero .reveal-onload{
+      opacity:0;
+      animation: softFadeUp 0.9s cubic-bezier(.25,.8,.25,1) forwards;
+    }
+    
+    .hero .reveal-onload.h1 { animation-delay: .2s }
+    .hero .reveal-onload.p  { animation-delay: .45s }
+    .hero .reveal-onload.btn{ animation-delay: .7s }
+  </style>
+
+  <!-- Header component -->
+  <script type="module" src="/components/header-component.js?v=4"></script>
+</head>
+<body>
+  <site-header></site-header>
+
+  <main>
+    <!-- ====== HERO with video background ====== -->
+    <section class="hero">
+      <video
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster=""
+        aria-hidden="true"
+        data-rate="0.75"
+      >
+        <source src="/bgvideo.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео в фоне.
+      </video>
+
+      <div class="grain"></div>
+
+      <div class="hero-content container">
+        <h1 class="reveal-onload h1">We’re product marketing leaders<br>in B2B SaaS</h1>
+        <p class="reveal-onload p">transforming products into powerful stories<br>and go-to-market strategies that sell.</p>
+        <a class="cta reveal-onload btn" href="#">CONTACT US</a>
+      </div>
+    </section>
+
+    <div class="hero-carousel">
+      <div class="marquee">
+        <div class="track">
+          <img src="logo1.png"><img src="logo2.png"><img src="logo3.png"><img src="logo4.png"><img src="logo5.png">
+          <img src="logo6.png"><img src="logo7.png"><img src="logo8.png"><img src="logo9.png"><img src="logo10.png">
+        </div>
+      </div>
+    </div>
+
+    <section class="section-beige">
+      <div class="container">
+        <h2 class="reveal reveal-up">We have three ways to help you grow</h2>
+        <div class="three-cols">
+          <div class="card reveal reveal-up delay-1">
+            <h3>Agency</h3>
+            <p>Full-service marketing team to lead strategy and execution with product marketing, sales enablement, and design.</p>
+            <a href="#">SEE OUR SERVICES</a>
+          </div>
+          <div class="card reveal reveal-up delay-2">
+            <h3>Marketplace</h3>
+            <p>Connecting startups with vetted marketing consultants and supporting the engagement to make it great.</p>
+            <a href="#">HIRE FREELANCERS</a>
+          </div>
+          <div class="card reveal reveal-up delay-3">
+            <h3>Playbooks</h3>
+            <p>Self-serve marketing strategy program packed with best practices, templates & weekly office hours.</p>
+            <a href="#">JOIN THE PROGRAM</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-beige">
+      <div class="container">
+        <h2 class="reveal reveal-up">We’re experts in product marketing, sales enablement, and design</h2>
+        <div class="tiles">
+          <div class="tile reveal reveal-up delay-1">Positioning & Messaging</div>
+          <div class="tile reveal reveal-up delay-2">Go-To-Market Strategy</div>
+          <div class="tile reveal reveal-up delay-3">Product Launches</div>
+          <div class="tile reveal reveal-up delay-1">Sales Decks & Enablement Assets</div>
+          <div class="tile reveal reveal-up delay-2">Competitive Intelligence</div>
+          <div class="tile reveal reveal-up delay-3">Website Content & Design</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Past Experience Section -->
+    <section class="past-experience" style="background:#000;color:#fff;padding:100px 0;text-align:center">
+      <div class="container">
+        <h2 class="reveal reveal-up" style="font-size:28px;margin-bottom:50px;font-family:'Zing Rust Base','Montserrat',sans-serif">We leverage our past in-house experience</h2>
+        <div class="reveal reveal-up delay-1" style="display:flex;flex-wrap:wrap;justify-content:center;gap:50px;margin-bottom:80px">
+          <img src="eventbrite.png" alt="Eventbrite" style="height:40px;filter:invert(1)">
+          <img src="klaviyo.png" alt="Klaviyo" style="height:40px;filter:invert(1)">
+          <img src="zendesk.png" alt="Zendesk" style="height:40px;filter:invert(1)">
+          <img src="yahoo.png" alt="Yahoo" style="height:40px;filter:invert(1)">
+          <img src="saucelabs.png" alt="SauceLabs" style="height:40px;filter:invert(1)">
+          <img src="intercom.png" alt="Intercom" style="height:40px;filter:invert(1)">
+          <img src="hired.png" alt="Hired" style="height:40px;filter:invert(1)">
+          <img src="aws.png" alt="AWS" style="height:40px;filter:invert(1)">
+          <img src="salesforce.png" alt="Salesforce" style="height:40px;filter:invert(1)">
+        </div>
+        <h2 class="reveal reveal-up delay-2" style="font-size:28px;margin-bottom:50px;font-family:'Zing Rust Base','Montserrat',sans-serif">To help drive revenue at top tech companies</h2>
+        <div class="reveal reveal-up delay-3" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px;max-width:1000px;margin:0 auto">
+          <div style="border:1px solid #444;padding:40px"><img src="heartland.png" alt="Heartland" style="max-height:30px;filter:invert(1)"></div>
+          <div style="border:1px solid #444;padding:40px"><img src="servicenow.png" alt="ServiceNow" style="max-height:30px;filter:invert(1)"></div>
+          <div style="border:1px solid #444;padding:40px"><img src="diligent.png" alt="Diligent" style="max-height:30px;filter:invert(1)"></div>
+          <div style="border:1px solid #444;padding:40px"><img src="envoy.png" alt="Envoy" style="max-height:30px;filter:invert(1)"></div>
+          <div style="border:1px solid #444;padding:40px"><img src="elation.png" alt="Elation Health" style="max-height:30px;filter:invert(1)"></div>
+          <div style="border:1px solid #444;padding:40px"><img src="stellar.png" alt="Stellar" style="max-height:30px;filter:invert(1)"></div>
+          <div style="border:1px solid #444;padding:40px"><img src="linkedin.png" alt="LinkedIn" style="max-height:30px;filter:invert(1)"></div>
+          <div style="border:1px solid #444;padding:40px"><img src="momentum.png" alt="Momentum" style="max-height:30px;filter:invert(1)"></div>
+        </div>
+        <div class="reveal reveal-up delay-4" style="margin-top:60px">
+          <a href="#" class="cta">SEE OUR WORK</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- New Industries Section -->
+    <section class="industries">
+      <div class="container">
+        <h2 class="reveal reveal-up">We have experience in deeply technical industries</h2>
+        <div class="reveal reveal-up delay-2">
+          <div class="accordion">
+            <div class="accordion-item">Analytics, & Data <span>+</span></div>
+            <div class="accordion-item">ML & AI <span>+</span></div>
+            <div class="accordion-item">Web3 <span>+</span></div>
+            <div class="accordion-item">FinTech <span>+</span></div>
+            <div class="accordion-item">Hardware & Developer Tools <span>+</span></div>
+            <div class="accordion-item">Health Care & Benefits <span>+</span></div>
+            <div class="accordion-item">Marketing, Sales & Support <span>+</span></div>
+            <div class="accordion-item">Non-Profit & Environmental <span>+</span></div>
+            <div class="accordion-item">Security <span>+</span></div>
+            <div class="accordion-item">Workplace Technology <span>+</span></div>
+            <div class="accordion-item">And More <span>+</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <site-footer></site-footer>
+
+  <!-- Video: slow playback -->
+  <script>
+    (function(){
+      const v = document.querySelector('.hero-video');
+      if(!v) return;
+      const rate = parseFloat(v.getAttribute('data-rate') || '0.75');
+      function applyRate(){ try{ v.playbackRate = rate; }catch(e){} }
+      v.addEventListener('loadedmetadata', applyRate);
+      v.addEventListener('play', applyRate);
+      const tryPlay = () => v.play().catch(()=>{});
+      document.addEventListener('visibilitychange', () => { if(!document.hidden) tryPlay(); });
+      tryPlay();
+    }());
+  </script>
+
+  <!-- Reveal on scroll (IntersectionObserver) -->
+  <script>
+    (function(){
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      const els = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            // Если не нужно повторно анимировать — unobserve
+            io.unobserve(e.target);
+          }
+        });
+      }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+
+      els.forEach(el => io.observe(el));
+    }());
+  </script>
+
+  <!-- Footer component script -->
+ <script type="module" src="components/footer-component.js?v=5"></script>
+</body>
+</html>

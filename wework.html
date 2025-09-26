@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How We Work — OLIVINE</title>
+
+  <!-- Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+	/* ====== FONTS (optional local) ====== */
+	@font-face{
+	  font-family: "Extenda 30 Deca";
+	  src: url("fonts/Extenda-30Deca.woff2") format("woff2"),
+		   url("fonts/Extenda-30Deca.woff") format("woff");
+	  font-weight: 700; font-style: normal; font-display: swap;
+	}
+	@font-face{
+	  font-family: "Zing Rust Base";
+	  src: url("fonts/ZingRust-Base.woff2") format("woff2"),
+		   url("fonts/ZingRust-Base.woff") format("woff");
+	  font-weight: 700; font-style: normal; font-display: swap;
+	}
+
+	:root{
+	  --bg-dark:#0a0a0a;
+	  --ink:#fff;
+	  --muted:#b9b9b9;
+	  --brand:#1E48C1;
+	  --line:#1f1f1f;
+	  --beige:#f1ede6;
+	  --ink-dark:#0a0a0a;
+	  --ink-muted:#6b6b6b;
+	  --max:1200px;
+
+	  --ease: cubic-bezier(.22,.61,.36,1);
+	  --ease-soft: cubic-bezier(.25,.8,.25,1);
+	  --dur:.6s;
+	  --dur-soft:.9s;
+	}
+
+	*{box-sizing:border-box}
+	html,body{
+	  margin:0; padding:0; background:var(--bg-dark); color:var(--ink);
+	  font-family:"Montserrat",-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+	}
+	a{ color:inherit; text-decoration:none }
+
+	.container{ max-width:var(--max); margin:0 auto; padding:0 24px }
+
+	/* ===== HERO (How We Work) ===== */
+	.hero-hww{
+	  background:#000; color:#fff;
+	  padding:160px 0 120px;
+	  overflow:hidden;
+	}
+	.hero-hww .eyebrow{
+	  letter-spacing:.14em; text-transform:uppercase; color:#bdbdbd; font-size:14px; font-weight:700;
+	  margin-bottom:28px;
+	}
+	.hero-grid{ display:grid; gap:48px; grid-template-columns: 1fr; }
+	.hero-title{
+	  font-family:"Extenda 30 Deca","Montserrat",sans-serif;
+	  font-size:72px; line-height:1.05; margin:0 0 18px;
+	}
+	.hero-sub{ font-size:24px; color:#e5e5e5; margin:0; }
+	.hero-copy{ color:#d7d7d7; line-height:1.7; font-size:18px; }
+	.hero-copy p{ margin:0 0 18px }
+
+	@media(min-width:992px){
+	  .hero-grid{ grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); align-items:start }
+	  .hero-left{ padding-right:40px }
+	}
+
+	/* ===== OUR PROCESS ===== */
+	.beige{ background:var(--beige); color:#000; padding:120px 0 }
+	.section-wrap{ max-width:1000px; margin:0 auto }
+	.h2{ font-size:40px; line-height:1.15; margin:0 0 24px; font-weight:700 }
+	.process-desc{ color:#2a2a2a; font-size:18px; line-height:1.7; margin:0 0 28px; }
+	.divider{ height:1px; background:#cfcfcf; margin:28px 0 }
+
+	.accordion{ border-top:1px solid #cfcfcf; }
+	.acc-item{ border-bottom:1px solid #cfcfcf; }
+	.acc-btn{
+	  width:100%; background:transparent; border:0; text-align:left; padding:22px 0; cursor:pointer;
+	  display:grid; grid-template-columns: 1fr auto; align-items:center; gap:20px;
+	  font-size:22px; font-weight:600; color:#111;
+	}
+	.acc-icon{ font-size:24px; color:#666; width:24px; text-align:right; user-select:none; }
+	.acc-panel{ display:none; padding:8px 0 24px; color:#333; line-height:1.65; font-size:16px; }
+	.acc-item.open .acc-panel{ display:block }
+	.acc-item.open .acc-icon{ color:#333 }
+	.acc-item.open .acc-icon::before{ content:"–" }
+	.acc-icon::before{ content:"+" }
+
+	.process-group{ margin:60px 0 0 }
+	.group-title{ font-size:24px; margin:6px 0 18px; color:#111; font-weight:700 }
+
+	/* ===== Animations ===== */
+	@keyframes softFadeUp{
+	  from{ opacity:0; transform: translateY(20px) }
+	  to{ opacity:1; transform:none }
+	}
+	.hero-hww .reveal-onload{
+	  opacity:0;
+	  animation: softFadeUp var(--dur-soft) var(--ease-soft) forwards;
+	}
+	.hero-hww .eyebrow.reveal-onload{ animation-delay:.05s }
+	.hero-hww .hero-title.reveal-onload{ animation-delay:.25s }
+	.hero-hww .hero-sub.reveal-onload{ animation-delay:.48s }
+	.hero-hww .hero-copy.reveal-onload{ animation-delay:.72s }
+
+	.reveal{
+	  opacity:0;
+	  transform: translateY(18px);
+	  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+	}
+	.reveal.in{ opacity:1; transform:none }
+	.delay-1{ transition-delay:.08s }
+	.delay-2{ transition-delay:.16s }
+	.delay-3{ transition-delay:.24s }
+	.delay-4{ transition-delay:.32s }
+
+	@media (prefers-reduced-motion: reduce){
+	  .reveal, .hero-hww .reveal-onload{
+		opacity:1 !important; transform:none !important;
+		animation:none !important; transition:none !important;
+	  }
+	}
+  </style>
+
+  <script type="module" src="components/header-component.js"></script>
+</head>
+<body>
+
+  <site-header></site-header>
+
+  <main>
+	<!-- HERO -->
+	<section class="hero-hww">
+	  <div class="container">
+		<div class="hero-grid">
+		  <div class="hero-left">
+			<div class="eyebrow reveal-onload">Agency Services</div>
+			<h1 class="hero-title reveal-onload">How We Work</h1>
+			<p class="hero-sub reveal-onload">We’re more than an agency. We’re your partner.</p>
+		  </div>
+		  <div class="hero-copy reveal-onload">
+			<p>We’ve worked with dozens of companies as true strategic partners to position and launch products and brands, manage cross-functional teams, and keep things aligned and on track. Because of this, we’ve learned over the years what works (and what doesn’t).</p>
+			<p>For every engagement, you’ll partner with one of our directors and our team of consultants, while drawing on processes and resources from Olivine that might be outside your wheelhouse. This results in a working relationship that is results-oriented, value-driven, and totally delightful.</p>
+			<p>We’re process-driven and results-oriented so we get sh*t done. Olivine is structured to take the best parts of working with an agency with the best parts of working with an individual consultant.</p>
+			<p>Plus, we’ve all worked at tech companies in the past so we’re particularly empathetic and attuned to the fast-paced, changing nature of startups and growth-stage companies.</p>
+		  </div>
+		</div>
+	  </div>
+	</section>
+
+	<!-- PROCESS -->
+	<section class="beige">
+	  <div class="container section-wrap">
+		<div class="process-wrap">
+		  <h2 class="h2 reveal">Our Process</h2>
+		  <h3 class="group-title reveal delay-1">Product Marketing &amp; Sales Enablement projects</h3>
+		  <p class="process-desc reveal delay-2">For product marketing and sales enablement work, we like to start with a series of strategic workshops...</p>
+
+		  <div class="divider"></div>
+
+		  <div class="accordion reveal delay-3" id="acc-a">
+			<div class="acc-item open">
+			  <button class="acc-btn"><span>01 Intake &amp; Discovery</span><span class="acc-icon"></span></button>
+			  <div class="acc-panel">We begin by understanding who you are targeting, what you are selling...</div>
+			</div>
+			<div class="acc-item">
+			  <button class="acc-btn"><span>02 Strategy &amp; Workshops</span><span class="acc-icon"></span></button>
+			  <div class="acc-panel">A set of focused workshops to align on positioning, messaging, ICPs, and go-to-market plans.</div>
+			</div>
+		  </div>
+
+		  <div class="process-group reveal delay-4">
+			<h3 class="group-title">Branding &amp; Website Projects</h3>
+			<div class="divider"></div>
+			<div class="accordion" id="acc-b">
+			  <div class="acc-item open">
+				<button class="acc-btn"><span>01 Intake &amp; Strategy</span><span class="acc-icon"></span></button>
+				<div class="acc-panel">We start by understanding who you are and what you do...</div>
+			  </div>
+			  <div class="acc-item">
+				<button class="acc-btn"><span>02 Brand Identity</span><span class="acc-icon"></span></button>
+				<div class="acc-panel">Visual system, tone of voice, and usage guidelines that scale across touchpoints.</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</section>
+  </main>
+
+  <site-footer></site-footer>
+
+  <!-- Accordion -->
+  <script>
+	document.querySelectorAll('.accordion').forEach(acc=>{
+	  acc.addEventListener('click', (e)=>{
+		const btn = e.target.closest('.acc-btn');
+		if(!btn) return;
+		const item = btn.parentElement;
+		const open = item.classList.contains('open');
+		acc.querySelectorAll('.acc-item').forEach(i=> i.classList.remove('open'));
+		if(!open) item.classList.add('open');
+	  });
+	});
+  </script>
+
+  <!-- Reveal on scroll -->
+  <script>
+	(function(){
+	  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	  if (prefersReduced) return;
+	  const els = document.querySelectorAll('.reveal');
+	  const io = new IntersectionObserver((entries)=>{
+		entries.forEach(e=>{
+		  if(e.isIntersecting){
+			e.target.classList.add('in');
+			io.unobserve(e.target);
+		  }
+		});
+	  },{threshold:0.15, rootMargin:"0px 0px -10% 0px"});
+	  els.forEach(el=>io.observe(el));
+	}());
+  </script>
+
+  <script type="module" src="components/footer-component.js"></script>
+</body>
+</html>
