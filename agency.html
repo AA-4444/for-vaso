@@ -20,6 +20,9 @@
 	  --safe-top:env(safe-area-inset-top, 0px);
 	  --hero-pt:calc(160px + var(--header-h));
 	  --hero-pb:80px;
+
+	  --ease: cubic-bezier(.22,.61,.36,1);
+	  --dur: .6s;
 	}
 	@media (max-width:768px){
 	  :root{
@@ -69,7 +72,7 @@
 	  .hero .cta{ font-size:15px; padding:12px 20px }
 	}
 
-	/* Stats Section (первый скрин) */
+	/* Stats Section */
 	.stats{
 	  background:#000;
 	  color:#fff;
@@ -94,7 +97,7 @@
 	  .stats-grid{ grid-template-columns:1fr 1fr; gap:30px }
 	}
 
-	/* Services Section (второй скрин) */
+	/* Services Section */
 	.services{
 	  background:var(--beige);
 	  color:#000;
@@ -130,6 +133,44 @@
 	  color:#333;
 	  line-height:1.5;
 	}
+
+	/* ===== Animations ===== */
+
+	/* 1) мягкая onload-анимация в hero */
+	@keyframes softFadeUp{
+	  from{ opacity:0; transform: translateY(16px) }
+	  to{ opacity:1; transform: none }
+	}
+	.hero .reveal-onload{ opacity:0; animation: softFadeUp .9s cubic-bezier(.25,.8,.25,1) forwards }
+	.hero .reveal-onload.h1{ animation-delay:.20s }
+	.hero .reveal-onload.p { animation-delay:.40s }
+	.hero .reveal-onload.btn{ animation-delay:.60s }
+
+	/* 2) reveal-на-скролле (как на других страницах) */
+	.reveal{
+	  opacity:0;
+	  transform: translateY(18px);
+	  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+	  will-change:opacity, transform;
+	}
+	.reveal.in{ opacity:1; transform:none }
+	.reveal-up{ transform: translateY(18px) }
+	.reveal-down{ transform: translateY(-18px) }
+	.reveal-left{ transform: translateX(18px) }
+	.reveal-right{ transform: translateX(-18px) }
+	.delay-1{ transition-delay:.08s }
+	.delay-2{ transition-delay:.16s }
+	.delay-3{ transition-delay:.24s }
+	.delay-4{ transition-delay:.32s }
+
+	/* Reduce Motion — не выключаем, а делаем короче */
+	@media (prefers-reduced-motion: reduce){
+	  .reveal,
+	  .hero .reveal-onload{
+		transition-duration: .15s !important;
+		animation-duration: .15s !important;
+	  }
+	}
   </style>
 
   <script type="module" src="components/header-component.js?v=5"></script>
@@ -141,31 +182,31 @@
 	<!-- HERO -->
 	<section class="hero">
 	  <div class="container">
-		<h1>Agency<br>Full-service product marketing consultancy</h1>
-		<p>
+		<h1 class="reveal-onload h1">Agency<br>Full-service product marketing consultancy</h1>
+		<p class="reveal-onload p">
 		  Our team of product marketing, sales enablement, and design leaders drive strategy and execution for high-growth results.
 		</p>
-		<a href="#" class="cta">WORK WITH US</a>
+		<a href="#" class="cta reveal-onload btn">WORK WITH US</a>
 	  </div>
 	</section>
 
 	<!-- Stats Section -->
 	<section class="stats">
-	  <h2>We’ve been helping high-growth tech companies since 2016</h2>
+	  <h2 class="reveal reveal-up">We’ve been helping high-growth tech companies since 2016</h2>
 	  <div class="stats-grid">
-		<div class="stat">
+		<div class="stat reveal reveal-up delay-1">
 		  <strong>50+</strong>
 		  <span>B2B SaaS Clients Worked With</span>
 		</div>
-		<div class="stat">
+		<div class="stat reveal reveal-up delay-2">
 		  <strong>20+</strong>
 		  <span>Brand & Product Launches</span>
 		</div>
-		<div class="stat">
+		<div class="stat reveal reveal-up delay-3">
 		  <strong>10+</strong>
 		  <span>Publicly Traded Enterprises</span>
 		</div>
-		<div class="stat">
+		<div class="stat reveal reveal-up delay-4">
 		  <strong>$133B</strong>
 		  <span>Total Estimated Client Valuation</span>
 		</div>
@@ -174,29 +215,29 @@
 
 	<!-- Services Section -->
 	<section class="services">
-	  <h2>We’re experts in product marketing for B2B SaaS</h2>
+	  <h2 class="reveal reveal-up">We’re experts in product marketing for B2B SaaS</h2>
 	  <div class="services-grid">
-		<div class="service-card">
+		<div class="service-card reveal reveal-up delay-1">
 		  <h3>Product Marketing</h3>
 		  <p>Develop personas, product positioning, and messaging.</p>
 		</div>
-		<div class="service-card">
+		<div class="service-card reveal reveal-up delay-2">
 		  <h3>Go-To-Market Strategy</h3>
 		  <p>Develop your value prop & launch to convert users.</p>
 		</div>
-		<div class="service-card">
+		<div class="service-card reveal reveal-up delay-3">
 		  <h3>Sales Enablement</h3>
 		  <p>Arming your sales team with the collateral & strategy they need.</p>
 		</div>
-		<div class="service-card">
+		<div class="service-card reveal reveal-up delay-1">
 		  <h3>Brand Design</h3>
 		  <p>Develop new branding or refresh an existing one.</p>
 		</div>
-		<div class="service-card">
+		<div class="service-card reveal reveal-up delay-2">
 		  <h3>Websites</h3>
 		  <p>Website copy, design, development, and performance.</p>
 		</div>
-		<div class="service-card">
+		<div class="service-card reveal reveal-up delay-3">
 		  <h3>Competitive Intelligence</h3>
 		  <p>Market and competitive research, competitive intel program development.</p>
 		</div>
@@ -205,6 +246,49 @@
   </main>
 
   <site-footer></site-footer>
+
+  <!-- Footer -->
   <script type="module" src="components/footer-component.js?v=5"></script>
+
+  <!-- Reveal on scroll (устойчивый) -->
+  <script>
+	(function(){
+	  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	  const els = document.querySelectorAll('.reveal');
+	  const revealNow = (el) => {
+		if (prefersReduced) el.style.transitionDuration = '160ms';
+		el.classList.add('in');
+	  };
+
+	  if ('IntersectionObserver' in window){
+		const io = new IntersectionObserver((entries)=>{
+		  entries.forEach(e=>{
+			if (e.isIntersecting){ revealNow(e.target); io.unobserve(e.target); }
+		  });
+		}, { root:null, rootMargin:'0px 0px -10% 0px', threshold:0.15 });
+
+		els.forEach(el=> io.observe(el));
+
+		// Элементы, уже попавшие во вьюпорт в первый кадр (iOS баг)
+		requestAnimationFrame(()=>{
+		  els.forEach(el=>{
+			const r = el.getBoundingClientRect();
+			if (r.top < innerHeight * 0.85 && r.bottom > 0) revealNow(el);
+		  });
+		});
+	  } else {
+		// Фолбэк без IO
+		const onScroll = ()=>{
+		  els.forEach(el=>{
+			if (el.classList.contains('in')) return;
+			const r = el.getBoundingClientRect();
+			if (r.top < innerHeight * 0.85) revealNow(el);
+		  });
+		};
+		onScroll();
+		window.addEventListener('scroll', onScroll, { passive:true });
+	  }
+	}());
+  </script>
 </body>
 </html>
