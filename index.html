@@ -396,14 +396,13 @@
     .hero .reveal-onload.btn{ animation-delay: .27s }
 
     /* reduce motion */
-    @media (prefers-reduced-motion: reduce){
-      .reveal,
-      .hero .reveal-onload{
-        opacity:1 !important;
-        transform:none !important;
-        animation:none !important;
-        transition:none !important;
-      }
+   @media (prefers-reduced-motion: reduce){
+     .reveal,
+     .hero .reveal-onload{
+       transition-duration: 0.15s !important;
+       animation-duration: 0.15s !important;
+     }
+   }
       .card, .tile{
         transition: none !important;
       }
@@ -436,6 +435,8 @@
       from{ opacity:0; transform: translateY(20px) }
       to{ opacity:1; transform: none }
     }
+    /* при reduce-motion делаем медленнее (но не выключаем) */
+    html.reduce-motion .track { animation-duration: 70s; }
     
     .hero .reveal-onload{
       opacity:0;
@@ -674,25 +675,48 @@
 
   <!-- Reveal on scroll (IntersectionObserver) -->
   <script>
-    (function(){
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReduced) return;
-
-      const els = document.querySelectorAll('.reveal');
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('in');
-            
-            io.unobserve(e.target);
-          }
+  (function () {
+    // 1) НЕ отключаем полностью при Reduce Motion — просто делаем мягче
+    const mm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const reduce = mm.matches && localStorage.getItem('motionOverride') !== 'on';
+    document.documentElement.classList.toggle('reduce-motion', reduce);
+  
+    // 2) IntersectionObserver + фикс iOS (элементы уже в вьюпорте)
+    const els = document.querySelectorAll('.reveal');
+    const revealNow = (el)=> {
+      if (reduce) el.style.transitionDuration = '160ms';
+      el.classList.add('in');
+    };
+  
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if (e.isIntersecting) { revealNow(e.target); io.unobserve(e.target); }
         });
       }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
-
-      els.forEach(el => io.observe(el));
-    }());
-  </script>
-
+      els.forEach(el=> io.observe(el));
+  
+      // iOS баг: вручную активируем то, что уже видно при загрузке
+      requestAnimationFrame(()=>{
+        els.forEach(el=>{
+          const r = el.getBoundingClientRect();
+          if (r.top < innerHeight * 0.85 && r.bottom > 0) revealNow(el);
+        });
+      });
+    } else {
+      // Фолбэк без IO
+      const onScroll = ()=>{
+        els.forEach(el=>{
+          if (el.classList.contains('in')) return;
+          const r = el.getBoundingClientRect();
+          if (r.top < innerHeight * 0.85) revealNow(el);
+        });
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+  })();
+  </script> 
   <script>
     // Дублируем содержимое .track один раз, чтобы получить 2 идентичных набора
     (function(){
@@ -704,6 +728,25 @@
         track.dataset.duplicated = 'true';
       }
     }());
+  </script>
+  
+  <script>
+  (function(){
+    const track = document.getElementById('logosTrack');
+    if (!track) return;
+  
+    // Дублируем ровно один раз весь набор, чтобы длина стала 2× (для -50%)
+    const clones = Array.from(track.children).map(n => n.cloneNode(true));
+    clones.forEach(cl => track.appendChild(cl));
+  
+    // На очень широких экранах при редких логотипах может всё равно быть «редко».
+    // Добиваемся плотности — пока ширина меньше 2× вьюпорта, доклонируем по одному ряду.
+    const minWidth = innerWidth * 2;
+    while (track.scrollWidth < minWidth) {
+      const more = Array.from(track.children).slice(0, clones.length).map(n => n.cloneNode(true));
+      more.forEach(m => track.appendChild(m));
+    }
+  })();
   </script>
 
   <!-- Footer component script -->
