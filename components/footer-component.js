@@ -79,7 +79,7 @@ class SiteFooter extends HTMLElement {
 			<div class="foot">
 			  <div class="brand">
 				<div class="logo-underline"></div>
-				<div class="logotype">Wengy</div>
+				<div class="logotype">WENGY</div>
 			  </div>
 			  <p style="color:#bbb;max-width:240px;margin:12px auto 14px">Product marketing leaders in B2B SaaS.</p>
 			  <p>

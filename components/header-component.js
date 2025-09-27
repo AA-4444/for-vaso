@@ -140,7 +140,7 @@ class SiteHeader extends HTMLElement {
 
 	  <header>
 		<div class="container nav">
-		  <a class="brand-link" href="index.html" aria-label="Wengy — home">Wengy</a>
+		  <a class="brand-link" href="index.html" aria-label="Wengy — home">WENGY</a>
 
 		  <div class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="primaryMenu">
 			<span></span><span></span><span></span>
