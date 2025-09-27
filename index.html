@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <!-- единый мета-тег; с cover для вырезов -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>OLIVINE — Home 1:1 Replica</title>
+  <title>Wengy</title>
 
   <!-- Montserrat (можешь заменить локально) -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
@@ -201,7 +201,15 @@
     .hero-carousel{ background:#000; padding:22px 0 }
     .marquee{ overflow:hidden }
     .track{ display:flex; gap:50px; animation:scroll 35s linear infinite }
-    .track img{ height:40px; object-fit:contain; filter:invert(1) }
+    
+    .hero-carousel .track img{
+      height:40px;
+      object-fit:contain;
+      display:block;
+      filter:none !important;
+      mix-blend-mode:normal; 
+      opacity:1;
+    }
     @keyframes scroll{
       from{ transform:translateX(0) }
       to{ transform:translateX(-50%) }
@@ -437,6 +445,66 @@
     .hero .reveal-onload.h1 { animation-delay: .2s }
     .hero .reveal-onload.p  { animation-delay: .45s }
     .hero .reveal-onload.btn{ animation-delay: .7s }
+  
+      .hero-carousel{ background:#000; padding:22px 0 }
+      .marquee{ overflow:hidden; position:relative }
+    
+      .track{
+        display:flex;
+        gap:50px;                 
+        width:max-content;        
+        will-change:transform;
+        animation:scroll 35s linear infinite;
+      }
+      .track img{
+        height:40px;
+        object-fit:contain;
+        filter:invert(1);
+        flex:0 0 auto;           
+        display:block;           
+      }
+    
+   
+      @keyframes scroll{
+        from{ transform:translateX(0) }
+        to{ transform:translateX(-50%) }
+      }
+    
+      
+      @media (prefers-reduced-motion:reduce){
+        .track{ animation:none; transform:none }
+      }
+      
+      .past-experience .logo,
+      .clients-grid .logo {
+        height: 40px;
+        display: block;
+        filter: none !important;     
+        mix-blend-mode: normal;
+        opacity: 1;
+      }
+      
+     
+      .logo--invert {
+        filter: brightness(0) invert(1) !important;
+      }
+    
+    .clients-grid > div{
+      display:flex;                
+      align-items:center;
+      justify-content:center;
+      min-height:120px;             
+     
+    }
+    
+  
+    .clients-grid .logo{
+      max-height:36px;              
+      width:auto;                  
+      height:auto;
+      object-fit:contain;
+      display:block;
+    }
   </style>
 
   <!-- Header component -->
@@ -446,7 +514,7 @@
   <site-header></site-header>
 
   <main>
-    <!-- ====== HERO with video background ====== -->
+    <!-- ====== HERO  ====== -->
     <section class="hero">
       <video
         class="hero-video"
@@ -475,8 +543,11 @@
     <div class="hero-carousel">
       <div class="marquee">
         <div class="track">
-          <img src="logo1.png"><img src="logo2.png"><img src="logo3.png"><img src="logo4.png"><img src="logo5.png">
-          <img src="logo6.png"><img src="logo7.png"><img src="logo8.png"><img src="logo9.png"><img src="logo10.png">
+          <img src="assets/ava.png"><img src="assets/auto.png"><img src="assets/vent.png"><img src="assets/colab.png"><img src="assets/wizard.png">
+          <img src="assets/thepark.png"><img src="assets/skyvideo2.png"><img src="assets/diana.png"><img src="assets/style.png"><img src="assets/oldtown.png"><img src="assets/circle.png">
+          <img src="assets/citywall.png">
+          <img src="assest/suptad.pngs">
+
         </div>
       </div>
     </div>
@@ -519,36 +590,47 @@
     </section>
 
     <!-- Past Experience Section -->
-    <section class="past-experience" style="background:#000;color:#fff;padding:100px 0;text-align:center">
-      <div class="container">
-        <h2 class="reveal reveal-up" style="font-size:28px;margin-bottom:50px;font-family:'Zing Rust Base','Montserrat',sans-serif">We leverage our past in-house experience</h2>
-        <div class="reveal reveal-up delay-1" style="display:flex;flex-wrap:wrap;justify-content:center;gap:50px;margin-bottom:80px">
-          <img src="eventbrite.png" alt="Eventbrite" style="height:40px;filter:invert(1)">
-          <img src="klaviyo.png" alt="Klaviyo" style="height:40px;filter:invert(1)">
-          <img src="zendesk.png" alt="Zendesk" style="height:40px;filter:invert(1)">
-          <img src="yahoo.png" alt="Yahoo" style="height:40px;filter:invert(1)">
-          <img src="saucelabs.png" alt="SauceLabs" style="height:40px;filter:invert(1)">
-          <img src="intercom.png" alt="Intercom" style="height:40px;filter:invert(1)">
-          <img src="hired.png" alt="Hired" style="height:40px;filter:invert(1)">
-          <img src="aws.png" alt="AWS" style="height:40px;filter:invert(1)">
-          <img src="salesforce.png" alt="Salesforce" style="height:40px;filter:invert(1)">
-        </div>
-        <h2 class="reveal reveal-up delay-2" style="font-size:28px;margin-bottom:50px;font-family:'Zing Rust Base','Montserrat',sans-serif">To help drive revenue at top tech companies</h2>
-        <div class="reveal reveal-up delay-3" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px;max-width:1000px;margin:0 auto">
-          <div style="border:1px solid #444;padding:40px"><img src="heartland.png" alt="Heartland" style="max-height:30px;filter:invert(1)"></div>
-          <div style="border:1px solid #444;padding:40px"><img src="servicenow.png" alt="ServiceNow" style="max-height:30px;filter:invert(1)"></div>
-          <div style="border:1px solid #444;padding:40px"><img src="diligent.png" alt="Diligent" style="max-height:30px;filter:invert(1)"></div>
-          <div style="border:1px solid #444;padding:40px"><img src="envoy.png" alt="Envoy" style="max-height:30px;filter:invert(1)"></div>
-          <div style="border:1px solid #444;padding:40px"><img src="elation.png" alt="Elation Health" style="max-height:30px;filter:invert(1)"></div>
-          <div style="border:1px solid #444;padding:40px"><img src="stellar.png" alt="Stellar" style="max-height:30px;filter:invert(1)"></div>
-          <div style="border:1px solid #444;padding:40px"><img src="linkedin.png" alt="LinkedIn" style="max-height:30px;filter:invert(1)"></div>
-          <div style="border:1px solid #444;padding:40px"><img src="momentum.png" alt="Momentum" style="max-height:30px;filter:invert(1)"></div>
-        </div>
-        <div class="reveal reveal-up delay-4" style="margin-top:60px">
-          <a href="#" class="cta">SEE OUR WORK</a>
-        </div>
-      </div>
-    </section>
+   
+   <section class="past-experience" style="background:#000;color:#fff;padding:100px 0;text-align:center">
+     <div class="container">
+       <h2 class="reveal reveal-up" style="font-size:28px;margin-bottom:50px;font-family:'Zing Rust Base','Montserrat',sans-serif">
+         We leverage our past in-house experience
+       </h2>
+   
+       <div class="reveal reveal-up delay-1"
+            style="display:flex;flex-wrap:wrap;justify-content:center;gap:50px;margin-bottom:80px">
+         <img class="logo" src="assets/ava.png" alt="Eventbrite">
+         <img class="logo" src="assets/vent.png" alt="Klaviyo">
+         <img class="logo" src="assets/diana.png" alt="Zendesk">
+         <img class="logo" src="assets/oldtown.png" alt="Yahoo">
+         <img class="logo" src="assets/style.png" alt="SauceLabs">
+         <img class="logo" src="assets/thepark.png" alt="Intercom">
+         <img class="logo" src="assets/circle.png" alt="Hired">
+         <img class="logo" src="assets/citywall.png" alt="AWS">
+         <img class="logo" src="assets/wizzard2.png" alt="Salesforce">
+       </div>
+   
+       <h2 class="reveal reveal-up delay-2" style="font-size:28px;margin-bottom:50px;font-family:'Zing Rust Base','Montserrat',sans-serif">
+         To help drive revenue at companies
+       </h2>
+   
+       <div class="clients-grid reveal reveal-up delay-3"
+            style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px;max-width:1000px;margin:0 auto">
+         <div style="border:1px solid #444;padding:40px"><img class="logo" src="assets/vent.png" alt="Vent"></div>
+         <div style="border:1px solid #444;padding:40px"><img class="logo" src="assets/style.png" alt="Style"></div>
+         <div style="border:1px solid #444;padding:40px"><img class="logo" src="assets/wizzard2.png" alt="Wizard"></div>
+         <div style="border:1px solid #444;padding:40px"><img class="logo" src="assets/citywall.png" alt="Citywall"></div>
+         <div style="border:1px solid #444;padding:40px"><img class="logo" src="assets/auto.png" alt="Auto"></div>
+         <div style="border:1px solid #444;padding:40px"><img class="logo" src="assets/colab.png" alt="Colab"></div>
+         <div style="border:1px solid #444;padding:40px"><img class="logo" src="assets/thepark.png" alt="The Park"></div>
+         <div style="border:1px solid #444;padding:40px"><img class="logo" src="assets/skyvideo2.png" alt="Skyvideo"></div>
+       </div>
+   
+       <div class="reveal reveal-up delay-4" style="margin-top:60px">
+         <a href="#" class="cta">SEE OUR WORK</a>
+       </div>
+     </div>
+   </section>
 
     <!-- New Industries Section -->
     <section class="industries">
@@ -601,13 +683,26 @@
         entries.forEach(e => {
           if (e.isIntersecting) {
             e.target.classList.add('in');
-            // Если не нужно повторно анимировать — unobserve
+            
             io.unobserve(e.target);
           }
         });
       }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
 
       els.forEach(el => io.observe(el));
+    }());
+  </script>
+
+  <script>
+    // Дублируем содержимое .track один раз, чтобы получить 2 идентичных набора
+    (function(){
+      const track = document.querySelector('.marquee .track');
+      if(!track) return;
+      // если уже дублировали — не делаем повторно
+      if(!track.dataset.duplicated){
+        track.innerHTML = track.innerHTML + track.innerHTML;
+        track.dataset.duplicated = 'true';
+      }
     }());
   </script>
 
