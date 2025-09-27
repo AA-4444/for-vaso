@@ -396,13 +396,14 @@
     .hero .reveal-onload.btn{ animation-delay: .27s }
 
     /* reduce motion */
-   @media (prefers-reduced-motion: reduce){
-     .reveal,
-     .hero .reveal-onload{
-       transition-duration: 0.15s !important;
-       animation-duration: 0.15s !important;
-     }
-   }
+    @media (prefers-reduced-motion: reduce){
+      .reveal,
+      .hero .reveal-onload{
+        opacity:1 !important;
+        transform:none !important;
+        animation:none !important;
+        transition:none !important;
+      }
       .card, .tile{
         transition: none !important;
       }
@@ -435,8 +436,6 @@
       from{ opacity:0; transform: translateY(20px) }
       to{ opacity:1; transform: none }
     }
-    /* при reduce-motion делаем медленнее (но не выключаем) */
-    html.reduce-motion .track { animation-duration: 70s; }
     
     .hero .reveal-onload{
       opacity:0;
@@ -728,25 +727,6 @@
         track.dataset.duplicated = 'true';
       }
     }());
-  </script>
-  
-  <script>
-  (function(){
-    const track = document.getElementById('logosTrack');
-    if (!track) return;
-  
-    // Дублируем ровно один раз весь набор, чтобы длина стала 2× (для -50%)
-    const clones = Array.from(track.children).map(n => n.cloneNode(true));
-    clones.forEach(cl => track.appendChild(cl));
-  
-    // На очень широких экранах при редких логотипах может всё равно быть «редко».
-    // Добиваемся плотности — пока ширина меньше 2× вьюпорта, доклонируем по одному ряду.
-    const minWidth = innerWidth * 2;
-    while (track.scrollWidth < minWidth) {
-      const more = Array.from(track.children).slice(0, clones.length).map(n => n.cloneNode(true));
-      more.forEach(m => track.appendChild(m));
-    }
-  })();
   </script>
 
   <!-- Footer component script -->
