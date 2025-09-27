@@ -6,7 +6,7 @@
   <title>Wengy</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-
+<link rel="preload" as="video" href="bgvideo.mp4" type="video/mp4" crossorigin="anonymous">
   <style>
     /* ===== FONTS (локальные, если есть) ===== */
     @font-face{
@@ -75,24 +75,20 @@
     .container{ max-width:var(--max); margin:0 auto; padding:0 24px }
 
     /* ===== HERO ===== */
-    .hero{
-      position:relative; overflow:hidden;
-      text-align:center; background:#000;
-      min-height:85vh;
-      padding-top:var(--hero-pt);
-      padding-bottom:var(--hero-pb);
-      contain:paint; /* меньше перерисовок на iOS */
-    }
-    .hero-video{
-      position:absolute; inset:0 auto auto 0;
-      width:100%;
-      top:calc(-1 * var(--hero-pt) - var(--safe-top));
-      height:calc(100% + var(--hero-pt) + var(--safe-top));
-      object-fit:cover; object-position:center top;
-      z-index:0; pointer-events:none; opacity:.95;
-      will-change:transform; backface-visibility:hidden;
-      transform:translateZ(0); /* GPU hint */
-    }
+   .hero{
+     position:relative; overflow:hidden;
+     text-align:center; background:#000;
+     min-height:85vh;
+     padding-top:var(--hero-pt);
+     padding-bottom:var(--hero-pb);
+   }
+   .hero-video{
+     position:absolute; inset:0;
+     width:100%; height:100%;
+     object-fit:cover; object-position:center top;
+     z-index:0; pointer-events:none; opacity:.95;
+     backface-visibility:hidden; transform:translateZ(0);
+   }
     .hero-content{ position:relative; z-index:2; }
     .hero h1{
       font-family:"Extenda 30 Deca","Montserrat",sans-serif;
@@ -275,9 +271,19 @@
   <main>
     <!-- ===== HERO ===== -->
     <section class="hero">
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" data-rate="0.75">
-        <source src="bgvideo.mp4" type="video/mp4">
-      </video>
+   <video
+     class="hero-video"
+     src="bgvideo.mp4"
+     muted
+     autoplay
+     loop
+     playsinline
+     webkit-playsinline
+     x5-playsinline
+     preload="auto"
+     crossorigin="anonymous"
+   >
+   </video>
 
       <div class="hero-content container">
         <h1 class="reveal-onload h1">We’re product marketing leaders<br>in B2B SaaS</h1>
@@ -411,18 +417,45 @@
   <site-footer></site-footer>
 
   <!-- ===== Video: keep playback rate stable ===== -->
-  <script>
-    (function(){
-      const v = document.querySelector('.hero-video');
-      if(!v) return;
-      const rate = parseFloat(v.getAttribute('data-rate') || '0.75');
-      const applyRate = () => { try{ v.playbackRate = rate; }catch(e){} };
-      v.addEventListener('loadedmetadata', applyRate, { passive:true });
-      v.addEventListener('play', applyRate, { passive:true });
-      const tryPlay = () => v.play().catch(()=>{});
-      document.addEventListener('visibilitychange', () => { if(!document.hidden) tryPlay(); }, { passive:true });
+<script>
+  (function(){
+    const v = document.querySelector('.hero-video');
+    if (!v) return;
+  
+    // Иногда браузер «залипает» на metadata — явно инициируем загрузку:
+    try { v.load(); } catch(e) {}
+  
+    const RATE = parseFloat(v.dataset.rate || '0.75') || 0.75;
+  
+    const setRate = () => {
+      try { v.playbackRate = RATE; } catch(e){}
+    };
+  
+    // Пытаемся играть «мягко» несколько раз
+    const tryPlay = () => v.play().then(setRate).catch(()=>{});
+  
+    const onCanStart = () => {
       tryPlay();
-    }());
+    };
+  
+    v.addEventListener('loadeddata', onCanStart, { passive:true });
+    v.addEventListener('canplay', onCanStart, { passive:true });
+    v.addEventListener('canplaythrough', onCanStart, { passive:true });
+    v.addEventListener('play', setRate, { passive:true });
+  
+    // Возвращаемся с другого таба — повторяем
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) tryPlay();
+    }, { passive:true });
+  
+    // iOS иногда ждёт жест — используем любой «лёгкий» интеракшн один раз
+    const kick = () => { tryPlay(); window.removeEventListener('pointerdown', kick, true); window.removeEventListener('touchstart', kick, true); };
+    window.addEventListener('pointerdown', kick, true);
+    window.addEventListener('touchstart', kick, true);
+  
+    // Перестраховка, если сеть медленная
+    setTimeout(tryPlay, 800);
+  })();
   </script>
 
   <!-- ===== Reveal on scroll (устойчиво на iOS) ===== -->
