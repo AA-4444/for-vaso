@@ -392,143 +392,209 @@
     </section>
 
     <!-- ===== INDUSTRIES ===== -->
-<!-- ===== INDUSTRIES (Accordion с раскрытием снизу) ===== -->
+<!-- ===== INDUSTRIES (accordion снизу) ===== -->
     <section class="industries">
-      <div class="container">
+      <div class="container industries-wrap">
         <h2 class="reveal reveal-up">We have experience in deeply technical industries</h2>
     
-        <div class="accordion">
+        <div class="accordion reveal reveal-up delay-2" id="industries-acc">
           <!-- 1 -->
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span>Analytics & Data</span>
-              <span class="icon">+</span>
+              <span class="title">Analytics, &amp; Data</span>
+              <span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
-              <p>Dashboards, BI/ETL, product analytics, customer insights и data storytelling.</p>
+              <ul class="acc-list">
+                <li><a href="#">Equals</a>, next-generation spreadsheets</li>
+                <li><a href="#">Looker</a>, business intelligence &amp; data analytics platform</li>
+                <li><a href="#">Safegraph</a>, global point-of-interest data platform</li>
+              </ul>
             </div>
           </div>
     
           <!-- 2 -->
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span>ML & AI</span>
-              <span class="icon">+</span>
+              <span class="title">ML &amp; AI</span>
+              <span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
-              <p>Positioning и go-to-market для AI-платформ, ML-инструментов и моделей.</p>
+              <ul class="acc-list">
+                <li>Positioning и GTM для AI-платформ</li>
+                <li>MLOps, tooling, интеграции</li>
+                <li>Responsible AI messaging</li>
+              </ul>
             </div>
           </div>
     
           <!-- 3 -->
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span>Web3</span>
-              <span class="icon">+</span>
+              <span class="title">Web3</span>
+              <span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
-              <p>Crypto, DeFi, NFT и developer tools для новой децентрализованной экономики.</p>
+              <ul class="acc-list">
+                <li>Crypto &amp; DeFi продукты</li>
+                <li>NFT/сети, кошельки, custody</li>
+                <li>Dev tools и SDK</li>
+              </ul>
             </div>
           </div>
     
           <!-- 4 -->
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span>FinTech</span>
-              <span class="icon">+</span>
+              <span class="title">FinTech</span>
+              <span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
-              <p>Digital banking, payments, compliance и финансовые платформы.</p>
+              <ul class="acc-list">
+                <li>Digital banking &amp; payments</li>
+                <li>Compliance/AML</li>
+                <li>Financial APIs &amp; platforms</li>
+              </ul>
             </div>
           </div>
     
           <!-- 5 -->
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span>Hardware & Developer Tools</span>
-              <span class="icon">+</span>
+              <span class="title">Hardware &amp; Developer Tools</span>
+              <span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
-              <p>IoT, SDK, API и инструменты для инженеров и product-teams.</p>
+              <ul class="acc-list">
+                <li>IoT и edge-solutions</li>
+                <li>SDK, API, CLI</li>
+                <li>Platform &amp; DX улучшения</li>
+              </ul>
             </div>
           </div>
     
           <!-- 6 -->
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span>Health Care & Benefits</span>
-              <span class="icon">+</span>
+              <span class="title">Health Care &amp; Benefits</span>
+              <span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
-              <p>Telemedicine, HR benefits platforms и digital health продукты.</p>
+              <ul class="acc-list">
+                <li>Telemedicine &amp; digital health</li>
+                <li>HR benefits platforms</li>
+                <li>HIPAA-ready коммуникации</li>
+              </ul>
             </div>
           </div>
     
           <!-- 7 -->
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span>Marketing, Sales & Support</span>
-              <span class="icon">+</span>
+              <span class="title">Marketing, Sales &amp; Support</span>
+              <span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
-              <p>CRM, sales enablement, маркетинговые автоматизации и support-системы.</p>
+              <ul class="acc-list">
+                <li>CRM &amp; sales enablement</li>
+                <li>Маркетинговые автоматизации</li>
+                <li>Support/CS платформы</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     
       <style>
-        .accordion { border-top:1px solid #ccc }
-        .accordion-item { border-bottom:1px solid #ccc }
+        /* layout как у тебя: слева заголовок, справа список */
+        .industries { background:var(--beige); color:#000; padding:100px 0 }
+        .industries-wrap{
+          display:grid; grid-template-columns:1fr 2fr; gap:40px; align-items:start;
+        }
+        @media (max-width:1024px){ .industries-wrap{ grid-template-columns:1fr } }
     
-        .accordion-header {
+        /* список */
+        .accordion{ border-top:1px solid #d7d7d7 }
+        .accordion-item{ border-bottom:1px solid #d7d7d7 }
+    
+        .accordion-header{
           width:100%; display:flex; justify-content:space-between; align-items:center;
           padding:18px 0; background:none; border:0; cursor:pointer;
-          font:inherit; font-size:18px; font-weight:500; color:inherit;
-          text-align:left;
+          font:inherit; font-weight:600; font-size:18px; color:inherit; text-align:left;
         }
-        .accordion-header .icon {
-          font-size:22px; transition:transform .25s ease;
+        .accordion-header .title{ pointer-events:none }
+        .accordion-header .icon{
+          width:24px; height:24px; display:grid; place-items:center; color:#333;
+          font-size:22px; line-height:1;
+          position:relative;
         }
-        .accordion-item.active .accordion-header .icon {
-          transform:rotate(45deg); /* + превращается в × */
+        /* плюс/минус через псевдоэлемент — так чище визуально */
+        .accordion-header .icon::before{ content:'+'; }
+        .accordion-item.open .accordion-header .icon::before{ content:'–'; }
+    
+        /* выпадающий блок: СТРОГО снизу, с отступом */
+        .accordion-content{
+          overflow:hidden;
+          max-height:0; opacity:0; padding:0;
+          transition:max-height .35s var(--ease), opacity .25s var(--ease), padding .35s var(--ease);
+        }
+        .accordion-item.open .accordion-content{
+          /* max-height задаём скриптом по фактической высоте */
+          opacity:1; padding:10px 0 18px; /* комфортный отступ сверху/снизу */
         }
     
-        .accordion-content {
-          max-height:0; overflow:hidden;
-          opacity:0; padding:0;
-          transition:max-height .35s ease, opacity .25s ease;
+        /* список внутри, как на рефе: стрелочка и подчёркнутые ссылки */
+        .acc-list{ list-style:none; margin:0; padding:0 }
+        .acc-list li{
+          display:flex; gap:10px; align-items:baseline;
+          margin:8px 0; font-size:15px; line-height:1.5; color:#222;
         }
-        .accordion-content p {
-          margin:0; padding:10px 0 16px;
-          font-size:15px; line-height:1.5; color:#333;
-        }
-    
-        .accordion-item.active .accordion-content {
-          max-height:400px; /* подстраивается под содержимое */
-          opacity:1;
+        .acc-list li::before{ content:'›'; color:#7b7b7b }
+        .acc-list a{
+          color:inherit; text-decoration:underline;
+          text-underline-offset:3px; text-decoration-thickness:1px;
         }
       </style>
     
       <script>
         (function(){
-          const items = document.querySelectorAll('.accordion-item');
+          const root = document.getElementById('industries-acc');
+          if(!root) return;
+          const items = Array.from(root.querySelectorAll('.accordion-item'));
+    
+          // открыть по умолчанию ПЕРВЫЙ пункт
+          const openItem = (item)=>{
+            const content = item.querySelector('.accordion-content');
+            item.classList.add('open');
+            item.querySelector('.accordion-header').setAttribute('aria-expanded','true');
+            content.style.maxHeight = content.scrollHeight + 'px';
+          };
+          const closeItem = (item)=>{
+            const content = item.querySelector('.accordion-content');
+            item.classList.remove('open');
+            item.querySelector('.accordion-header').setAttribute('aria-expanded','false');
+            content.style.maxHeight = '0px';
+          };
+    
           items.forEach(item=>{
             const btn = item.querySelector('.accordion-header');
             btn.addEventListener('click', ()=>{
-              const isOpen = item.classList.contains('active');
-              // закрываем все
-              items.forEach(i=>{
-                i.classList.remove('active');
-                i.querySelector('.accordion-header').setAttribute('aria-expanded','false');
-              });
-              // открываем выбранный
-              if(!isOpen){
-                item.classList.add('active');
-                btn.setAttribute('aria-expanded','true');
-              }
+              const isOpen = item.classList.contains('open');
+              // классический accordion: один открыт
+              items.forEach(closeItem);
+              if(!isOpen) openItem(item);
             });
+            // начальное состояние
+            item.querySelector('.accordion-content').style.maxHeight = '0px';
           });
+    
+          if(items[0]) openItem(items[0]);
+    
+          // пересчитать высоту при ресайзе (чтобы не обрезало)
+          window.addEventListener('resize', ()=>{
+            const opened = root.querySelector('.accordion-item.open .accordion-content');
+            if(opened) opened.style.maxHeight = opened.scrollHeight + 'px';
+          }, { passive:true });
         })();
       </script>
     </section>
