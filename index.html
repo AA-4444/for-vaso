@@ -6,9 +6,11 @@
   <title>Wengy</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="preload" as="video" href="bgvideo.mp4" type="video/mp4" crossorigin="anonymous">
+
+  <link rel="preload" as="video" href="bgvideo.mp4" type="video/mp4" crossorigin="anonymous">
+
   <style>
-    /* ===== FONTS (локальные, если есть) ===== */
+    /* ===== FONTS ===== */
     @font-face{
       font-family:"Extenda 30 Deca";
       src:url("fonts/Extenda-30Deca.woff2") format("woff2"),
@@ -28,7 +30,7 @@
       font-weight:400; font-style:normal; font-display:swap;
     }
 
-    /* ===== DESIGN TOKENS ===== */
+    /* ===== TOKENS ===== */
     :root{
       --bg-dark:#0a0a0a;
       --ink:#fff;
@@ -39,10 +41,9 @@
       --max:1200px;
 
       --header-h:74px;
-      --safe-top:env(safe-area-inset-top, 0px);
 
       --hero-pt:calc(180px + var(--header-h));
-      --hero-pb:80px;
+      --hero-pb:0px; /* <— убрали лишний зазор, чтобы не было чёрной полосы */
 
       --ease: cubic-bezier(.22,.61,.36,1);
       --dur: .6s;
@@ -51,13 +52,12 @@
       --shadow-card: 0 1px 3px rgba(0,0,0,.10);
       --shadow-hover: 0 18px 40px rgba(0,0,0,.20);
 
-      --marquee-speed: 100; /* px/sec — можно менять скорость карусели */
+      --marquee-speed: 100; /* px/sec */
     }
     @media (max-width:768px){
       :root{
         --header-h:64px;
         --hero-pt:calc(140px + var(--header-h));
-        --hero-pb:56px;
       }
     }
 
@@ -75,20 +75,20 @@
     .container{ max-width:var(--max); margin:0 auto; padding:0 24px }
 
     /* ===== HERO ===== */
-   .hero{
-     position:relative; overflow:hidden;
-     text-align:center; background:#000;
-     min-height:85vh;
-     padding-top:var(--hero-pt);
-     padding-bottom:var(--hero-pb);
-   }
-   .hero-video{
-     position:absolute; inset:0;
-     width:100%; height:100%;
-     object-fit:cover; object-position:center top;
-     z-index:0; pointer-events:none; opacity:.95;
-     backface-visibility:hidden; transform:translateZ(0);
-   }
+    .hero{
+      position:relative; overflow:hidden;
+      text-align:center; background:#000;
+      min-height:85vh;
+      padding-top:var(--hero-pt);
+      padding-bottom:var(--hero-pb);
+    }
+    .hero-video{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover; object-position:center top;
+      z-index:0; pointer-events:none; opacity:.95;
+      backface-visibility:hidden; transform:translateZ(0);
+    }
     .hero-content{ position:relative; z-index:2; }
     .hero h1{
       font-family:"Extenda 30 Deca","Montserrat",sans-serif;
@@ -106,8 +106,6 @@
       transition:box-shadow .3s var(--ease), transform .06s ease;
       box-shadow:0 0 0 0 rgba(30,72,193,.35);
     }
-    .hero .cta:hover{ box-shadow:0 10px 30px rgba(30,72,193,.35) }
-    .hero .cta:active{ transform: translateY(1px) }
 
     @media (max-width:768px){
       .hero{ min-height:75vh }
@@ -116,82 +114,61 @@
       .hero .cta{ font-size:15px; padding:12px 18px }
     }
 
-    /* ===== HERO onload animation (одна версия keyframes!) ===== */
-    @keyframes softFadeUp{
-      from{ opacity:0; transform: translateY(16px) }
-      to{ opacity:1; transform: none }
-    }
-    .hero .reveal-onload{
-      opacity:0; animation: softFadeUp .9s cubic-bezier(.25,.8,.25,1) forwards;
-    }
-    .hero .reveal-onload.h1 { animation-delay:.20s }
-    .hero .reveal-onload.p  { animation-delay:.45s }
+    /* ===== onload anim ===== */
+    @keyframes softFadeUp{ from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+    .hero .reveal-onload{ opacity:0; animation: softFadeUp .9s cubic-bezier(.25,.8,.25,1) forwards }
+    .hero .reveal-onload.h1{ animation-delay:.20s }
+    .hero .reveal-onload.p{ animation-delay:.45s }
     .hero .reveal-onload.btn{ animation-delay:.70s }
 
     /* ===== REVEAL on scroll ===== */
-    .reveal{
-      opacity:0; transform: translateY(18px);
-      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
-      will-change:opacity, transform; backface-visibility:hidden;
-    }
+    .reveal{ opacity:0; transform: translateY(18px); transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease) }
     .reveal.in{ opacity:1; transform:none }
-    .reveal-up{ transform: translateY(18px) }
-    .reveal-down{ transform: translateY(-18px) }
-    .reveal-left{ transform: translateX(18px) }
-    .reveal-right{ transform: translateX(-18px) }
     .delay-1{ transition-delay:.08s } .delay-2{ transition-delay:.16s }
     .delay-3{ transition-delay:.24s } .delay-4{ transition-delay:.32s }
 
-    /* Reduce motion — МЯГКО, не выключаем */
     @media (prefers-reduced-motion: reduce){
-      .reveal, .hero .reveal-onload{
-        transition-duration: .15s !important;
-        animation-duration: .15s !important;
-      }
+      .reveal, .hero .reveal-onload{ transition-duration:.15s !important; animation-duration:.15s !important }
     }
 
     /* ===== LOGOS MARQUEE ===== */
-    .hero-carousel{ background:transparent; padding:0px 0 }
-    .marquee{ overflow:hidden; position:relative; contain: content}
+    .hero-carousel{ background:#000; padding:22px 0 } /* норм высота, без сжатия и без «чёрной полосы» сверху/снизу */
+    .marquee{
+      overflow:hidden; position:relative;
+      -webkit-transform:translateZ(0); perspective:1000px; /* анти-Safari */
+      -webkit-backface-visibility:hidden; backface-visibility:hidden;
+    }
     .track{
       display:flex; gap:50px; width:max-content;
       will-change:transform;
-      backface-visibility:hidden;
-      transform:translate3d(0,0,0);     
-      -webkit-transform:translate3d(0,0,0);
+      transform:translate3d(0,0,0); -webkit-transform:translate3d(0,0,0);
       animation: scroll var(--marquee-duration, 35s) linear infinite;
     }
     .hero-carousel .track img{
-      height:40px; object-fit:contain; display:block; flex:0 0 auto;
-      filter:none !important; mix-blend-mode:normal; opacity:1;
-      will-change:transform;
-      backface-visibility:hidden;
-      transform:translateZ(0);          
-      -webkit-transform:translateZ(0);
+      height:48px;                /* вернул нормальную высоту (не сжимаем) */
+      object-fit:contain; display:block; flex:0 0 auto;
+      -webkit-backface-visibility:hidden; backface-visibility:hidden;
+      transform:translateZ(0); -webkit-transform:translateZ(0);
     }
-  @keyframes scroll{
-    from{ transform:translate3d(0,0,0) }
-    to  { transform:translate3d(-50%,0,0) }
-  }
+    @keyframes scroll{
+      from{ transform:translate3d(0,0,0) }
+      to  { transform:translate3d(-50%,0,0) }
+    }
     @media (prefers-reduced-motion: reduce){
-      .track{ animation-duration: calc(var(--marquee-duration, 35s) * .5) } /* просто медленнее */
+      .track{ animation-duration: calc(var(--marquee-duration, 35s) * .5) }
     }
 
-    /* ===== BEIGE ===== */
+    /* ===== BEIGE SECTIONS ===== */
     .section-beige{ background:var(--beige); color:#000; padding:100px 0 }
     .section-beige h2{
       text-align:center; font-size:32px; margin:0 0 60px;
       font-family:"Zing Rust Base","Montserrat",sans-serif; text-wrap:balance;
     }
-    .three-cols{
-      display:grid; grid-template-columns:repeat(3,1fr); gap:40px;
-      max-width:var(--max); margin:0 auto;
-    }
+    .three-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:40px; max-width:var(--max); margin:0 auto }
     .card{
       background:#fff; padding:40px 30px; border:1px solid #ececec; border-radius:16px;
       box-shadow:var(--shadow-card);
       transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur-fast) var(--ease);
-      will-change:transform, box-shadow; backface-visibility:hidden;
     }
     .card:hover{ transform: translateY(-6px); box-shadow:var(--shadow-hover) }
 
@@ -200,73 +177,140 @@
     .card a{
       display:inline-block; background:#000; color:#fff; padding:12px 26px; border-radius:999px;
       font-weight:600; font-size:14px; transition: transform .06s ease, box-shadow .2s var(--ease);
-      box-shadow:0 0 0 rgba(0,0,0,0);
     }
-    .card a:hover{ box-shadow: 0 10px 22px rgba(0,0,0,.18) }
-    .card a:active{ transform: translateY(1px) }
 
     /* ===== TILES ===== */
-    .tiles{
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:22px; max-width:var(--max); margin:0 auto;
-    }
+    .tiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px; max-width:var(--max); margin:0 auto }
     .tile{
       background:#fff; padding:20px; font-weight:600; font-size:18px; color:#000; text-align:center;
       border:1px solid #ececec; border-radius:12px;
       transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur-fast) var(--ease);
-      will-change: transform, box-shadow; backface-visibility:hidden;
     }
     .tile:hover{ transform: translateY(-4px); box-shadow: var(--shadow-hover) }
 
-    /* ===== INDUSTRIES ===== */
+    /* ===== INDUSTRIES (accordion) ===== */
     .industries{ background:var(--beige); color:#000; padding:100px 0 }
-    .industries .container{
-      display:grid; grid-template-columns:1fr 2fr; gap:40px; align-items:start;
-    }
-    .industries h2{
-      font-size:32px; margin:0; font-family:"Zing Rust Base","Montserrat",sans-serif; text-wrap:balance;
-    }
-    .accordion{ border-top:1px solid #ccc }
-    .accordion-item{
-      border-bottom:1px solid #ccc; display:flex; justify-content:space-between; align-items:center;
-      padding:20px 0; font-size:18px; font-weight:500; transition: color .2s var(--ease);
-    }
-    .accordion-item:hover{ color:#111 }
-    .accordion-item span{
-      font-size:24px; font-weight:400; color:#555; transition: transform .25s var(--ease);
-    }
-    .accordion-item:hover span{ transform: translateY(-2px) }
+    .industries .container{ display:grid; grid-template-columns:1fr 2fr; gap:40px; align-items:start }
+    .industries h2{ font-size:32px; margin:0; font-family:"Zing Rust Base","Montserrat",sans-serif }
 
-    /* ===== PAST EXPERIENCE (лого-сетки) ===== */
+    .accordion{ border-top:1px solid #d7d7d7 }
+    .accordion-item{
+      border-bottom:1px solid #d7d7d7;
+      display:block !important;   /* <— ключ: контент будет СНИЗУ, не справа */
+      width:100%;
+    }
+    .accordion-header{
+      width:100%; display:flex; justify-content:space-between; align-items:center;
+      padding:18px 0; background:none; border:0; cursor:pointer;
+      font:inherit; font-weight:600; font-size:18px; color:inherit; text-align:left;
+    }
+    .accordion-header .icon{
+      width:24px; height:24px; display:grid; place-items:center; color:#333;
+      font-size:22px; line-height:1; position:relative; flex:0 0 auto;
+    }
+    .accordion-header .icon::before{ content:'+'; }
+    .accordion-item.open .accordion-header .icon::before{ content:'–'; }
+
+    .accordion-content{
+      width:100%; overflow:hidden; max-height:0; opacity:0; padding:0;
+      transition:max-height .35s var(--ease), opacity .25s var(--ease), padding .35s var(--ease);
+      will-change:max-height, opacity;
+    }
+    .accordion-item.open .accordion-content{ opacity:1; padding:10px 0 18px }
+
+    .acc-list{ list-style:none; margin:0; padding:0 }
+    .acc-list li{ display:flex; gap:10px; align-items:baseline; margin:8px 0; font-size:15px; line-height:1.5; color:#222 }
+    .acc-list li::before{ content:'›'; color:#7b7b7b }
+    .acc-list a{ color:inherit; text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px }
+
+    /* ===== PAST EXPERIENCE ===== */
     .past-experience .logo,
-    .clients-grid .logo{
-      display:block; height:auto; max-height:36px; width:auto; object-fit:contain; opacity:1; filter:none !important;
-      backface-visibility:hidden;
-    }
-    .clients-grid > div{
-      display:flex; align-items:center; justify-content:center; min-height:120px;
-    }
+    .clients-grid .logo{ display:block; height:auto; max-height:36px; width:auto; object-fit:contain; opacity:1; backface-visibility:hidden }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width:1024px){
-      .three-cols{ grid-template-columns:repeat(2,1fr); gap:24px }
-      .industries .container{ grid-template-columns:1fr }
-    }
+    @media (max-width:1024px){ .three-cols{ grid-template-columns:repeat(2,1fr) } .industries .container{ grid-template-columns:1fr } }
     @media (max-width:768px){
       .three-cols{ grid-template-columns:1fr; gap:20px }
       .tiles{ grid-template-columns:1fr 1fr; gap:16px }
       .card{ padding:24px 20px }
     }
     @media (max-width:480px){
-      .hero h1{ font-size:32px }
-      .hero p{ font-size:16px }
-      .hero .cta{ width:100%; max-width:280px; margin:0 auto }
+      .hero h1{ font-size:32px } .hero p{ font-size:16px } .hero .cta{ width:100%; max-width:280px; margin:0 auto }
       .tiles{ grid-template-columns:1fr }
-      .past-experience h2{ font-size:22px !important; margin-bottom:30px }
-      .past-experience div[style*="display:flex"]{ gap:20px !important }
       .industries{ padding:60px 16px }
       .accordion-item{ font-size:16px; padding:14px 0 }
     }
+  
+    .hero{
+      
+      margin-top: calc(-1 * var(--header-h)) !important;
+      padding-bottom: 0 !important;         зазора снизу hero */
+      overflow:hidden !important;
+    }
+    .hero-content {
+      margin-top: 80px !important; 
+    }
+    .hero-video{
+      position:absolute !important;
+      inset:0 !important;                  
+      width:100% !important;
+      height:100% !important;
+      object-fit:cover !important;
+      
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+    
+  
+    site-header, site-header *{ margin-top:0 !important; }
+    
+    
+    .marquee{
+      overflow:hidden; position:relative;
+      -webkit-backface-visibility:hidden; backface-visibility:hidden;
+      -webkit-transform:translateZ(0); transform:translateZ(0);
+    }
+    .track{
+      display:flex; gap:50px; width:max-content;
+      will-change:transform;
+      -webkit-transform:translate3d(0,0,0); transform:translate3d(0,0,0);
+      animation: scroll var(--marquee-duration, 35s) linear infinite;
+    }
+    .hero-carousel .track img{
+      height:48px !important;     
+      width:auto !important;
+      object-fit:contain;
+      display:block; flex:0 0 auto;
+      -webkit-backface-visibility:hidden; backface-visibility:hidden;
+    }
+   
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .clients-grid > div {
+      border: 1px solid #444;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 140px;      
+      padding: 20px;
+    }
+    
+    .clients-grid .logo {
+      max-height: 60px;  
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+    
   </style>
 
   <script type="module" src="components/header-component.js?v=4"></script>
@@ -277,20 +321,7 @@
   <main>
     <!-- ===== HERO ===== -->
     <section class="hero">
-   <video
-     class="hero-video"
-     src="bgvideo.mp4"
-     muted
-     autoplay
-     loop
-     playsinline
-     webkit-playsinline
-     x5-playsinline
-     preload="auto"
-     crossorigin="anonymous"
-   >
-   </video>
-
+      <video class="hero-video" src="bgvideo.mp4" muted autoplay loop playsinline webkit-playsinline x5-playsinline preload="auto" crossorigin="anonymous"></video>
       <div class="hero-content container">
         <h1 class="reveal-onload h1">We’re product marketing leaders<br>in B2B SaaS</h1>
         <p class="reveal-onload p">transforming products into powerful stories<br>and go-to-market strategies that sell.</p>
@@ -298,7 +329,7 @@
       </div>
     </section>
 
-    <!-- ===== LOGOS MARQUEE (бесшовно) ===== -->
+    <!-- ===== LOGOS MARQUEE ===== -->
     <div class="hero-carousel">
       <div class="marquee">
         <div class="track" id="logosTrack">
@@ -397,18 +428,15 @@
       </div>
     </section>
 
-    <!-- ===== INDUSTRIES ===== -->
-<!-- ===== INDUSTRIES (accordion снизу) ===== -->
+    <!-- ===== INDUSTRIES (accordion) ===== -->
     <section class="industries">
-      <div class="container industries-wrap">
+      <div class="container">
         <h2 class="reveal reveal-up">We have experience in deeply technical industries</h2>
-    
+
         <div class="accordion reveal reveal-up delay-2" id="industries-acc">
-          <!-- 1 -->
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span class="title">Analytics, &amp; Data</span>
-              <span class="icon" aria-hidden="true"></span>
+              <span class="title">Analytics, &amp; Data</span><span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
               <ul class="acc-list">
@@ -418,12 +446,10 @@
               </ul>
             </div>
           </div>
-    
-          <!-- 2 -->
+
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span class="title">ML &amp; AI</span>
-              <span class="icon" aria-hidden="true"></span>
+              <span class="title">ML &amp; AI</span><span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
               <ul class="acc-list">
@@ -433,12 +459,10 @@
               </ul>
             </div>
           </div>
-    
-          <!-- 3 -->
+
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span class="title">Web3</span>
-              <span class="icon" aria-hidden="true"></span>
+              <span class="title">Web3</span><span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
               <ul class="acc-list">
@@ -448,12 +472,10 @@
               </ul>
             </div>
           </div>
-    
-          <!-- 4 -->
+
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span class="title">FinTech</span>
-              <span class="icon" aria-hidden="true"></span>
+              <span class="title">FinTech</span><span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
               <ul class="acc-list">
@@ -463,12 +485,10 @@
               </ul>
             </div>
           </div>
-    
-          <!-- 5 -->
+
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span class="title">Hardware &amp; Developer Tools</span>
-              <span class="icon" aria-hidden="true"></span>
+              <span class="title">Hardware &amp; Developer Tools</span><span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
               <ul class="acc-list">
@@ -478,12 +498,10 @@
               </ul>
             </div>
           </div>
-    
-          <!-- 6 -->
+
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span class="title">Health Care &amp; Benefits</span>
-              <span class="icon" aria-hidden="true"></span>
+              <span class="title">Health Care &amp; Benefits</span><span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
               <ul class="acc-list">
@@ -493,12 +511,10 @@
               </ul>
             </div>
           </div>
-    
-          <!-- 7 -->
+
           <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
-              <span class="title">Marketing, Sales &amp; Support</span>
-              <span class="icon" aria-hidden="true"></span>
+              <span class="title">Marketing, Sales &amp; Support</span><span class="icon" aria-hidden="true"></span>
             </button>
             <div class="accordion-content">
               <ul class="acc-list">
@@ -510,65 +526,13 @@
           </div>
         </div>
       </div>
-    
-      <style>
-        /* layout как у тебя: слева заголовок, справа список */
-        .industries { background:var(--beige); color:#000; padding:100px 0 }
-        .industries-wrap{
-          display:grid; grid-template-columns:1fr 2fr; gap:40px; align-items:start;
-        }
-        @media (max-width:1024px){ .industries-wrap{ grid-template-columns:1fr } }
-    
-        /* список */
-        .accordion{ border-top:1px solid #d7d7d7 }
-        .accordion-item{ border-bottom:1px solid #d7d7d7 }
-    
-        .accordion-header{
-          width:100%; display:flex; justify-content:space-between; align-items:center;
-          padding:18px 0; background:none; border:0; cursor:pointer;
-          font:inherit; font-weight:600; font-size:18px; color:inherit; text-align:left;
-        }
-        .accordion-header .title{ pointer-events:none }
-        .accordion-header .icon{
-          width:24px; height:24px; display:grid; place-items:center; color:#333;
-          font-size:22px; line-height:1;
-          position:relative;
-        }
-        /* плюс/минус через псевдоэлемент — так чище визуально */
-        .accordion-header .icon::before{ content:'+'; }
-        .accordion-item.open .accordion-header .icon::before{ content:'–'; }
-    
-        /* выпадающий блок: СТРОГО снизу, с отступом */
-        .accordion-content{
-          overflow:hidden;
-          max-height:0; opacity:0; padding:0;
-          transition:max-height .35s var(--ease), opacity .25s var(--ease), padding .35s var(--ease);
-        }
-        .accordion-item.open .accordion-content{
-          /* max-height задаём скриптом по фактической высоте */
-          opacity:1; padding:10px 0 18px; /* комфортный отступ сверху/снизу */
-        }
-    
-        /* список внутри, как на рефе: стрелочка и подчёркнутые ссылки */
-        .acc-list{ list-style:none; margin:0; padding:0 }
-        .acc-list li{
-          display:flex; gap:10px; align-items:baseline;
-          margin:8px 0; font-size:15px; line-height:1.5; color:#222;
-        }
-        .acc-list li::before{ content:'›'; color:#7b7b7b }
-        .acc-list a{
-          color:inherit; text-decoration:underline;
-          text-underline-offset:3px; text-decoration-thickness:1px;
-        }
-      </style>
-    
+
       <script>
         (function(){
           const root = document.getElementById('industries-acc');
           if(!root) return;
           const items = Array.from(root.querySelectorAll('.accordion-item'));
-    
-          // открыть по умолчанию ПЕРВЫЙ пункт
+
           const openItem = (item)=>{
             const content = item.querySelector('.accordion-content');
             item.classList.add('open');
@@ -581,22 +545,19 @@
             item.querySelector('.accordion-header').setAttribute('aria-expanded','false');
             content.style.maxHeight = '0px';
           };
-    
+
           items.forEach(item=>{
             const btn = item.querySelector('.accordion-header');
             btn.addEventListener('click', ()=>{
               const isOpen = item.classList.contains('open');
-              // классический accordion: один открыт
               items.forEach(closeItem);
               if(!isOpen) openItem(item);
             });
-            // начальное состояние
             item.querySelector('.accordion-content').style.maxHeight = '0px';
           });
-    
+
           if(items[0]) openItem(items[0]);
-    
-          // пересчитать высоту при ресайзе (чтобы не обрезало)
+
           window.addEventListener('resize', ()=>{
             const opened = root.querySelector('.accordion-item.open .accordion-content');
             if(opened) opened.style.maxHeight = opened.scrollHeight + 'px';
@@ -609,140 +570,91 @@
   <site-footer></site-footer>
 
   <!-- ===== Video: keep playback rate stable ===== -->
-<script>
+  <script>
   (function(){
     const v = document.querySelector('.hero-video');
     if (!v) return;
-  
-    // Иногда браузер «залипает» на metadata — явно инициируем загрузку:
     try { v.load(); } catch(e) {}
-  
-    const RATE = parseFloat(v.dataset.rate || '0.75') || 0.75;
-  
-    const setRate = () => {
-      try { v.playbackRate = RATE; } catch(e){}
-    };
-  
-    // Пытаемся играть «мягко» несколько раз
+    const RATE = 0.75;
+    const setRate = () => { try { v.playbackRate = RATE; } catch(e){} };
     const tryPlay = () => v.play().then(setRate).catch(()=>{});
-  
-    const onCanStart = () => {
-      tryPlay();
-    };
-  
+    const onCanStart = () => { tryPlay(); };
     v.addEventListener('loadeddata', onCanStart, { passive:true });
     v.addEventListener('canplay', onCanStart, { passive:true });
     v.addEventListener('canplaythrough', onCanStart, { passive:true });
     v.addEventListener('play', setRate, { passive:true });
-  
-    // Возвращаемся с другого таба — повторяем
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) tryPlay();
-    }, { passive:true });
-  
-    // iOS иногда ждёт жест — используем любой «лёгкий» интеракшн один раз
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) tryPlay(); }, { passive:true });
     const kick = () => { tryPlay(); window.removeEventListener('pointerdown', kick, true); window.removeEventListener('touchstart', kick, true); };
     window.addEventListener('pointerdown', kick, true);
     window.addEventListener('touchstart', kick, true);
-  
-    // Перестраховка, если сеть медленная
     setTimeout(tryPlay, 800);
   })();
   </script>
 
-  <!-- ===== Reveal on scroll (устойчиво на iOS) ===== -->
+  <!-- ===== Reveal on scroll ===== -->
   <script>
-    (function(){
-      const mm = window.matchMedia('(prefers-reduced-motion: reduce)');
-      const reduce = mm.matches && localStorage.getItem('motionOverride') !== 'on';
-      if (reduce) document.documentElement.classList.add('reduce-motion');
-
-      const els = document.querySelectorAll('.reveal');
-      const revealNow = (el)=>{
-        if (reduce) el.style.transitionDuration = '160ms';
-        el.classList.add('in');
-      };
-
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver((entries)=>{
-          entries.forEach(e=>{ if (e.isIntersecting){ revealNow(e.target); io.unobserve(e.target); } });
-        }, { root:null, rootMargin:'0px 0px -10% 0px', threshold:0.15 });
-        els.forEach(el=> io.observe(el));
-
-        // iOS: элементы, уже попавшие во вьюпорт на первом кадре
-        requestAnimationFrame(()=>{
-          els.forEach(el=>{
-            const r = el.getBoundingClientRect();
-            if (r.top < innerHeight * 0.85 && r.bottom > 0) revealNow(el);
-          });
+  (function(){
+    const els = document.querySelectorAll('.reveal');
+    const revealNow = (el)=>{ el.classList.add('in'); };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if (e.isIntersecting){ revealNow(e.target); io.unobserve(e.target); } });
+      }, { root:null, rootMargin:'0px 0px -10% 0px', threshold:0.15 });
+      els.forEach(el=> io.observe(el));
+      requestAnimationFrame(()=>{
+        els.forEach(el=>{
+          const r = el.getBoundingClientRect();
+          if (r.top < innerHeight * 0.85 && r.bottom > 0) revealNow(el);
         });
-      } else {
-        const onScroll = ()=>{
-          els.forEach(el=>{
-            if (el.classList.contains('in')) return;
-            const r = el.getBoundingClientRect();
-            if (r.top < innerHeight * 0.85) revealNow(el);
-          });
-        };
-        onScroll();
-        window.addEventListener('scroll', onScroll, { passive:true });
-      }
-    }());
+      });
+    } else {
+      const onScroll = ()=>{
+        els.forEach(el=>{
+          if (el.classList.contains('in')) return;
+          const r = el.getBoundingClientRect();
+          if (r.top < innerHeight * 0.85) revealNow(el);
+        });
+      };
+      onScroll(); window.addEventListener('scroll', onScroll, { passive:true });
+    }
+  }());
   </script>
 
-  <!-- ===== Infinite Marquee (бесшовно, авто-скорость) ===== -->
+  <!-- ===== Infinite Marquee (auto-speed) ===== -->
   <script>
-    (function(){
-      const track = document.getElementById('logosTrack');
-      if (!track) return;
+  (function(){
+    const track = document.getElementById('logosTrack');
+    if (!track) return;
 
-      const speed = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--marquee-speed')) || 100; // px/sec
-      let initialChildren = Array.from(track.children).map(n=>n.cloneNode(true));
+    const speed = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--marquee-speed')) || 100; // px/sec
+    let initialChildren = Array.from(track.children).map(n=>n.cloneNode(true));
 
-      // чистим повторы перед инициализацией (на случай hot-reload)
-      const cleanup = () => {
-        const kids = Array.from(track.children);
-        if (kids.length > initialChildren.length) {
-          track.innerHTML = '';
-          initialChildren.forEach(n=> track.appendChild(n.cloneNode(true)));
-        }
-      };
-
-      const fillAndSetDuration = () => {
-        cleanup();
-
-        // дублируем один раз весь набор (для -50%)
+    const cleanup = () => {
+      const kids = Array.from(track.children);
+      if (kids.length > initialChildren.length) {
+        track.innerHTML = '';
         initialChildren.forEach(n=> track.appendChild(n.cloneNode(true)));
+      }
+    };
 
-        // добиваем до нужной плотности: минимум 2 ширины вьюпорта
-        const minWidth = innerWidth * 2;
-        while (track.scrollWidth < minWidth) {
-          initialChildren.forEach(n=> track.appendChild(n.cloneNode(true)));
-        }
+    const fillAndSetDuration = () => {
+      cleanup();
+      initialChildren.forEach(n=> track.appendChild(n.cloneNode(true)));
+      const minWidth = innerWidth * 2;
+      while (track.scrollWidth < minWidth) { initialChildren.forEach(n=> track.appendChild(n.cloneNode(true))); }
+      const halfWidth = track.scrollWidth / 2;
+      const duration = Math.max(halfWidth / speed, 12);
+      track.style.setProperty('--marquee-duration', duration + 's');
+      track.style.animation = 'none'; void track.offsetWidth; track.style.animation = '';
+    };
 
-        // рассчитываем длительность: ширина половины трека (повторяем до -50%)
-        const halfWidth = track.scrollWidth / 2;
-        const duration = Math.max(halfWidth / speed, 12); // сек; нижняя граница для очень узких наборов
-        track.style.setProperty('--marquee-duration', duration + 's');
+    let rafId;
+    const onResize = () => { cancelAnimationFrame(rafId); rafId = requestAnimationFrame(fillAndSetDuration); };
 
-        // сброс анимации, чтобы применить новую длительность без дёрганья
-        track.style.animation = 'none';
-        // force reflow
-        void track.offsetWidth;
-        track.style.animation = '';
-      };
-
-      let rafId;
-      const onResize = () => {
-        cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(fillAndSetDuration);
-      };
-
-      window.addEventListener('load', fillAndSetDuration, { once:true });
-      window.addEventListener('resize', onResize, { passive:true });
-      // на всякий случай — если шрифты/видео доинициализируются
-      setTimeout(fillAndSetDuration, 800);
-    }());
+    window.addEventListener('load', fillAndSetDuration, { once:true });
+    window.addEventListener('resize', onResize, { passive:true });
+    setTimeout(fillAndSetDuration, 800);
+  })();
   </script>
 
   <script type="module" src="components/footer-component.js?v=5"></script>
