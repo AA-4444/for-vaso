@@ -392,25 +392,239 @@
     </section>
 
     <!-- ===== INDUSTRIES ===== -->
+    <!-- ===== INDUSTRIES (Accordion) ===== -->
     <section class="industries">
       <div class="container">
         <h2 class="reveal reveal-up">We have experience in deeply technical industries</h2>
+    
         <div class="reveal reveal-up delay-2">
-          <div class="accordion">
-            <div class="accordion-item">Analytics, & Data <span>+</span></div>
-            <div class="accordion-item">ML & AI <span>+</span></div>
-            <div class="accordion-item">Web3 <span>+</span></div>
-            <div class="accordion-item">FinTech <span>+</span></div>
-            <div class="accordion-item">Hardware & Developer Tools <span>+</span></div>
-            <div class="accordion-item">Health Care & Benefits <span>+</span></div>
-            <div class="accordion-item">Marketing, Sales & Support <span>+</span></div>
-            <div class="accordion-item">Non-Profit & Environmental <span>+</span></div>
-            <div class="accordion-item">Security <span>+</span></div>
-            <div class="accordion-item">Workplace Technology <span>+</span></div>
-            <div class="accordion-item">And More <span>+</span></div>
+          <div class="accordion" data-accordion="single">
+            <!-- item -->
+            <div class="accordion-item">
+              <button class="accordion-header" aria-expanded="false" aria-controls="acc-analytics" id="acc-btn-analytics">
+                <span>Analytics & Data</span>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-content" id="acc-analytics" role="region" aria-labelledby="acc-btn-analytics">
+                <p>
+                  Dashboards, product analytics, BI/ETL, data storytelling. Мы помогали превращать сырые данные в инсайты и понятные нарративы для GTM.
+                </p>
+              </div>
+            </div>
+    
+            <!-- item -->
+            <div class="accordion-item">
+              <button class="accordion-header" aria-expanded="false" aria-controls="acc-ml" id="acc-btn-ml">
+                <span>ML & AI</span>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-content" id="acc-ml" role="region" aria-labelledby="acc-btn-ml">
+                <p>
+                  От позиционирования AI-продуктов и фич до запусков: messaging, pricing, sales enablement для ML-платформ и прикладных решений.
+                </p>
+              </div>
+            </div>
+    
+            <!-- item -->
+            <div class="accordion-item">
+              <button class="accordion-header" aria-expanded="false" aria-controls="acc-web3" id="acc-btn-web3">
+                <span>Web3</span>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-content" id="acc-web3" role="region" aria-labelledby="acc-btn-web3">
+                <p>
+                  Wallets, infra, dApps. Объясняем сложные технологии простым языком для enterprise и деврел-аудиторий.
+                </p>
+              </div>
+            </div>
+    
+            <!-- item -->
+            <div class="accordion-item">
+              <button class="accordion-header" aria-expanded="false" aria-controls="acc-fintech" id="acc-btn-fintech">
+                <span>FinTech</span>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-content" id="acc-fintech" role="region" aria-labelledby="acc-btn-fintech">
+                <p>
+                  Платёжные решения, риск/комплаенс, API-платформы. Материалы для сейлз-команд и product launch-процессы.
+                </p>
+              </div>
+            </div>
+    
+            <!-- item -->
+            <div class="accordion-item">
+              <button class="accordion-header" aria-expanded="false" aria-controls="acc-devtools" id="acc-btn-devtools">
+                <span>Hardware & Developer Tools</span>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-content" id="acc-devtools" role="region" aria-labelledby="acc-btn-devtools">
+                <p>
+                  SDKs, CLIs, embedded/IoT. Документация, конкурентные баттлкарты, позиционирование для дев-аудитории.
+                </p>
+              </div>
+            </div>
+    
+            <!-- item -->
+            <div class="accordion-item">
+              <button class="accordion-header" aria-expanded="false" aria-controls="acc-health" id="acc-btn-health">
+                <span>Health Care & Benefits</span>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-content" id="acc-health" role="region" aria-labelledby="acc-btn-health">
+                <p>
+                  Healthtech, регуляторика, интеграции. Чёткие value props для клиник, страховщиков и B2B-покупателей.
+                </p>
+              </div>
+            </div>
+    
+            <!-- item -->
+            <div class="accordion-item">
+              <button class="accordion-header" aria-expanded="false" aria-controls="acc-gtm" id="acc-btn-gtm">
+                <span>Marketing, Sales & Support</span>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-content" id="acc-gtm" role="region" aria-labelledby="acc-btn-gtm">
+                <p>
+                  Комплексный GTM: ICP, messaging, контент- и enablement-активы, конкурентные playbooks для команд.
+                </p>
+              </div>
+            </div>
+    
+            <!-- item -->
+            <div class="accordion-item">
+              <button class="accordion-header" aria-expanded="false" aria-controls="acc-nonprofit" id="acc-btn-nonprofit">
+                <span>Non-Profit & Environmental</span>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-content" id="acc-nonprofit" role="region" aria-labelledby="acc-btn-nonprofit">
+                <p>
+                  Коммуникации миссии, грантовые программы, отчётность об импакте и материалы для стейкхолдеров.
+                </p>
+              </div>
+            </div>
+    
+            <!-- item -->
+            <div class="accordion-item">
+              <button class="accordion-header" aria-expanded="false" aria-controls="acc-security" id="acc-btn-security">
+                <span>Security</span>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-content" id="acc-security" role="region" aria-labelledby="acc-btn-security">
+                <p>
+                  AppSec, облачная безопасность, IAM, compliance. Материалы для CISO/SE, тех. обзоры и сравнения.
+                </p>
+              </div>
+            </div>
+    
+            <!-- item -->
+            <div class="accordion-item">
+              <button class="accordion-header" aria-expanded="false" aria-controls="acc-workplace" id="acc-btn-workplace">
+                <span>Workplace Technology</span>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-content" id="acc-workplace" role="region" aria-labelledby="acc-btn-workplace">
+                <p>
+                  Collaboration, productivity, ITSM. Объясняем ROI, time-to-value и кейсы для LOB и IT-покупателей.
+                </p>
+              </div>
+            </div>
+    
+            <!-- item -->
+            <div class="accordion-item">
+              <button class="accordion-header" aria-expanded="false" aria-controls="acc-more" id="acc-btn-more">
+                <span>And More</span>
+                <span class="icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-content" id="acc-more" role="region" aria-labelledby="acc-btn-more">
+                <p>
+                  Если вашей индустрии нет в списке — напишите нам. Скорее всего, у нас уже есть релевантный опыт.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    
+      <!-- локальный CSS для аккордеона -->
+      <style>
+        .accordion{ border-top:1px solid #ccc }
+        .accordion-item{ border-bottom:1px solid #ccc }
+        .accordion-header{
+          width:100%; background:none; border:0; padding:20px 0;
+          display:flex; align-items:center; justify-content:space-between;
+          text-align:left; cursor:pointer; color:inherit; font:inherit;
+          font-size:18px; font-weight:500;
+          transition: color .2s var(--ease);
+        }
+        .accordion-header:hover{ color:#111 }
+        .accordion-header .icon{
+          font-size:24px; font-weight:400; color:#555; line-height:1;
+          transition: transform .25s var(--ease), color .25s var(--ease);
+        }
+        .accordion-item.active .accordion-header .icon{
+          transform: rotate(45deg); /* + -> × (или –) */
+          color:#111;
+        }
+        .accordion-content{
+          max-height:0; overflow:hidden; opacity:0;
+          transition:max-height .35s ease, opacity .35s ease, padding .25s ease;
+          padding:0 0;
+          color:#333; font-size:15px; line-height:1.55;
+        }
+        .accordion-item.active .accordion-content{
+          max-height:320px; /* подстраивается под объём текста */
+          opacity:1; padding:10px 0 20px;
+        }
+        @media (prefers-reduced-motion: reduce){
+          .accordion-content{ transition-duration:.15s }
+          .accordion-header .icon{ transition-duration:.15s }
+        }
+      </style>
+    
+      <!-- JS: логика аккордеона -->
+      <script>
+        (function(){
+          const root = document.currentScript.closest('.industries');
+          const acc = root.querySelector('.accordion');
+          if (!acc) return;
+    
+          const single = acc.dataset.accordion !== 'multiple'; // по умолчанию — один открыт
+    
+          const items = Array.from(acc.querySelectorAll('.accordion-item'));
+          items.forEach(item => {
+            const btn = item.querySelector('.accordion-header');
+            const panel = item.querySelector('.accordion-content');
+            if (!btn || !panel) return;
+    
+            btn.addEventListener('click', () => {
+              const isOpen = item.classList.contains('active');
+    
+              if (single){
+                items.forEach(i => {
+                  if (i !== item){
+                    i.classList.remove('active');
+                    const b = i.querySelector('.accordion-header');
+                    const p = i.querySelector('.accordion-content');
+                    if (b) b.setAttribute('aria-expanded','false');
+                    if (p) p.style.maxHeight = null;
+                  }
+                });
+              }
+    
+              item.classList.toggle('active', !isOpen);
+              btn.setAttribute('aria-expanded', String(!isOpen));
+    
+              // авто-высота: считаем контент, чтобы анимация была гладкой
+              if (!isOpen){
+                panel.style.maxHeight = panel.scrollHeight + 'px';
+              } else {
+                panel.style.maxHeight = panel.scrollHeight + 'px'; // фикс для Safari
+                requestAnimationFrame(()=> panel.style.maxHeight = '0px');
+              }
+            });
+          });
+        })();
+      </script>
     </section>
   </main>
 
